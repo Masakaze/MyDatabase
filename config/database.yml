@@ -47,8 +47,13 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+#production:
+#  <<: *default
+#  database: MyDatabase_production
+#  username: MyDatabase
+#  password: <%= ENV['MYDATABASE_DATABASE_PASSWORD'] %>
 production:
-  <<: *default
-  database: MyDatabase_production
-  username: MyDatabase
-  password: <%= ENV['MYDATABASE_DATABASE_PASSWORD'] %>
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000
