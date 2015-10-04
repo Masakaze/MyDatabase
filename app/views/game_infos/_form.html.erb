@@ -19,6 +19,9 @@
     <%= f.label :name_en %><br>
     <%= f.text_field :name_en %>
   </div>
+  <div class="field">
+	<%= f.select :game_genre_id, GameGenre.all.map { |c| [c.name_jp, c.id] } %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

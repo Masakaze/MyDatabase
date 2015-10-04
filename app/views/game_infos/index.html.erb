@@ -7,6 +7,7 @@
     <tr>
       <th>Name jp</th>
       <th>Name en</th>
+	  <th>ジャンル</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= game_info.name_jp %></td>
         <td><%= game_info.name_en %></td>
+		<td><%= game_info.game_genre.name_jp if game_info.game_genre != nil %>
         <td><%= link_to 'Show', game_info %></td>
         <td><%= link_to 'Edit', edit_game_info_path(game_info) %></td>
         <td><%= link_to 'Destroy', game_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
