@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name jp:</strong>
+  <%= @game_genre.name_jp %>
+</p>
+
+<p>
+  <strong>Name en:</strong>
+  <%= @game_genre.name_en %>
+</p>
+
+<%= link_to 'Edit', edit_game_genre_path(@game_genre) %> |
+<%= link_to 'Back', game_genres_path %>
