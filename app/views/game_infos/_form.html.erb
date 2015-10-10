@@ -24,7 +24,7 @@
 		<%= select "game_info[game_genre_ids]", "", GameGenre.all.map { |c| [c.name_jp, c.id] }, :include_blank => true %>
 	<% else %>
 	<% @game_info.game_genres.each do |game_genre| %>
-		<%= select "game_info[game_genre_ids]", "", GameGenre.all.map { |c| [c.name_jp, c.id] } %>
+		<%= select "game_info[game_genre_ids]", "", [ [game_genre.name_jp, game_genre.id], ["", ""] ] %>
 	<% end %>
 	<%= select "game_info[game_genre_ids]", "", GameGenre.all.map { |c| [c.name_jp, c.id] }, :include_blank => true %>
 	<% end %>

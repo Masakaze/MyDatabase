@@ -72,17 +72,26 @@ class GameInfosController < ApplicationController
 
     def update_game_genres(params)
       return @game_info if params[:game_genre_ids] == nil
+
+      # 追加
       params[:game_genre_ids].each { |game_genre_id|
         game_genre = GameGenre.find_by(:id => game_genre_id)
         next if game_genre == nil
-        next if @game_info.game_genres.include?(game_genre) == false
-        @game_genre.game_genres << game_genre
+        next if @game_info.game_genres.include?(game_genre)
+        @game_info.game_genres << game_genre
       }
+
+      # 削除
+      @game_info.game_genres.each { |game_genre|
+        next if params[:game_genre_ids].include?(game_genre.id)
+        @game_info.game_genres.delete(game_genre)
+      }
+
       return @game_info
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_info_params
-      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids)
+      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids => [])
     end
 end
