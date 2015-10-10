@@ -25,6 +25,7 @@ class GameInfosController < ApplicationController
   # POST /game_infos.json
   def create
     @game_info = GameInfo.new(game_info_params)
+    @game_info = update_game_genres(params)
 
     respond_to do |format|
       if @game_info.save
@@ -40,6 +41,8 @@ class GameInfosController < ApplicationController
   # PATCH/PUT /game_infos/1
   # PATCH/PUT /game_infos/1.json
   def update
+    @game_info = update_game_genres(game_info_params)
+
     respond_to do |format|
       if @game_info.update(game_info_params)
         format.html { redirect_to @game_info, notice: 'Game info was successfully updated.' }
@@ -67,8 +70,19 @@ class GameInfosController < ApplicationController
       @game_info = GameInfo.find(params[:id])
     end
 
+    def update_game_genres(params)
+      return @game_info if params[:game_genre_ids] == nil
+      params[:game_genre_ids].each { |game_genre_id|
+        game_genre = GameGenre.find_by(:id => game_genre_id)
+        next if game_genre == nil
+        next if @game_info.game_genres.include?(game_genre) == false
+        @game_genre.game_genres << game_genre
+      }
+      return @game_info
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_info_params
-      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_id)
+      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids)
     end
 end
