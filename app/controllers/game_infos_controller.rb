@@ -26,6 +26,7 @@ class GameInfosController < ApplicationController
   def create
     @game_info = GameInfo.new(game_info_params)
     @game_info = update_game_genres(params)
+    @game_info = update_game_platforms(params)
 
     respond_to do |format|
       if @game_info.save
@@ -42,6 +43,7 @@ class GameInfosController < ApplicationController
   # PATCH/PUT /game_infos/1.json
   def update
     @game_info = update_game_genres(game_info_params)
+    @game_info = update_game_platforms(params)
 
     respond_to do |format|
       if @game_info.update(game_info_params)
@@ -90,8 +92,28 @@ class GameInfosController < ApplicationController
       return @game_info
     end
 
+    def update_game_platforms(params)
+      return @game_info if params[:game_platform_ids] == nil
+
+      # 追加
+      params[:game_platform_ids].each { |game_platform_id|
+        game_platform = GamePlatform.find_by(:id => game_platform_id)
+        next if game_platform == nil
+        next if @game_info.game_platforms.include?(game_platform)
+        @game_info.game_platforms << game_platform
+      }
+
+      # 削除
+      @game_info.game_platforms.each { |game_platform|
+        next if params[:game_platform_ids].include?(game_platform.id)
+        @game_info.game_platforms.delete(game_platform)
+      }
+
+      return @game_info
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_info_params
-      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids => [])
+      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids => [], :game_platform_ids => [])
     end
 end

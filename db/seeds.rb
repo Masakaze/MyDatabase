@@ -25,3 +25,23 @@ init_game_genres.each { |info|
     p genre
   end
 }
+
+
+# GamePlatformの初期化
+init_game_platforms = [
+                       {:name_en => "PS4"},
+                       {:name_en => "WiiU"},
+                  ]
+init_game_platforms.each { |info|
+  platform = GamePlatform.find_by(name_en: info[:name_en])
+  next if platform != nil
+
+  platform = GamePlatform.new(info)
+
+  if platform.save == false
+    abort("GamePlatform:#{platform.name_en}の初期化に失敗")
+  else
+    puts "Add Platform"
+    p platform
+  end
+}

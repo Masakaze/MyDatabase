@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004132732) do
+ActiveRecord::Schema.define(version: 20151011030647) do
 
   create_table "game_genres", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 20151004132732) do
   create_table "game_infos_game_genres", force: :cascade do |t|
     t.integer "game_info_id",  limit: 4
     t.integer "game_genre_id", limit: 4
+  end
+
+  create_table "game_infos_platforms", force: :cascade do |t|
+    t.integer "game_info_id",     limit: 4
+    t.integer "game_platform_id", limit: 4
+  end
+
+  create_table "game_platforms", force: :cascade do |t|
+    t.string   "name_en",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
