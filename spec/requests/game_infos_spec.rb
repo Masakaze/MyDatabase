@@ -11,7 +11,7 @@ describe "GameInfos" do
 
   describe "GameInfoRegister" do
     before do
-      @game_info = GameInfo.new(name_jp: "テストゲーム")
+      @game_info = GameInfo.new(name_jp: "テストゲーム", name_en: "testgame2")
     end
 
     subject { @game_info}
@@ -26,6 +26,11 @@ describe "GameInfos" do
 
     describe "when name_jp is too long" do
       before { @game_info.name_jp = "A"*31 }
+      it { should_not be_valid }
+    end
+
+    describe "when name_en include kana character" do
+      before { @game_info.name_en = "あ" }
       it { should_not be_valid }
     end
   end
