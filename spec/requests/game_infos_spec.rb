@@ -23,5 +23,10 @@ describe "GameInfos" do
       before { @game_info.name_jp = "" }
       it { should_not be_valid }
     end
+
+    describe "when name_jp is too long" do
+      before { @game_info.name_jp = "A"*31 }
+      it { should_not be_valid }
+    end
   end
 end
