@@ -12,9 +12,10 @@ describe "GameInfos" do
 =end
 
   describe "TopPage" do
-    it "Title should be" do
+    it "TopPage's content should be" do
       visit '/game_infos'
       expect(page).to have_content("ゲームデータベース")
+      expect(page).to have_title("GameDataBase")
     end
   end
 end
