@@ -67,6 +67,7 @@ class GameInfosController < ApplicationController
   end
 
   def switch_by_platform
+    @current_platform = params[:platform]
     render
   end
 
