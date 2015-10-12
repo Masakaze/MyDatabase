@@ -10,5 +10,9 @@
   <%= @game_info.name_en %>
 </p>
 
+<%= form_tag('/game_infos/switch_by_platform', :remote => true, :method => 'get') do -%>
+  <%= submit_tag('Start Ajax', :class => 'btn btn-primary btn-sm') -%>
+<% end %>
+
 <%= link_to 'Edit', edit_game_info_path(@game_info) %> |
 <%= link_to 'Back', game_infos_path %>

@@ -66,6 +66,10 @@ class GameInfosController < ApplicationController
     end
   end
 
+  def switch_by_platform
+    render
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game_info

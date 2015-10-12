@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :game_genres
-  resources :game_infos
+  resources :game_infos do
+    collection do
+      get 'switch_by_platform'
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
