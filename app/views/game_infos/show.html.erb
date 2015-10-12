@@ -10,6 +10,9 @@
   <%= @game_info.name_en %>
 </p>
 
+<div id='current_platform_field'>
+  表示中のプラットフォーム:<span id='current_platform_field_value'><%= @current_platform %></span>
+</div>
 <%
 platforms = @game_info.game_platforms != nil ? @game_info.game_platforms : []
 %>
