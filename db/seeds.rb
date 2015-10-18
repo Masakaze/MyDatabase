@@ -19,7 +19,7 @@ init_game_genres.each { |info|
   genre.name_jp = info[:name_jp]
 
   if genre.save == false
-    abort("GameGenre:#{genre.name_en}の初期化に失敗")
+    abort("GameGenre:#{genre.name_en}の初期化に失敗\n#{genre.errors.messages}")
   else
     puts "Add Genre"
     p genre
@@ -39,7 +39,7 @@ init_game_platforms.each { |info|
   platform = GamePlatform.new(info)
 
   if platform.save == false
-    abort("GamePlatform:#{platform.name_en}の初期化に失敗")
+    abort("GamePlatform:#{platform.name_en}の初期化に失敗\n#{platform.errors.messages}")
   else
     puts "Add Platform"
     p platform
