@@ -73,3 +73,13 @@ init_game_key_type_infos.each { |platform_name, init_infos|
     abort("GameKeyTypeの保存に失敗しました") if game_key_type.save() == false
   }
 }
+
+init_game_action_infos = [
+                          {:name_jp => "ジャンプ", :name_en => "Jump"},
+                          {:name_jp => "ダッシュ", :name_en => "Dash"},
+                         ]
+init_game_action_infos.each { |init_info|
+  game_action = GameAction.find_or_create_by(:name_en => init_info[:name_en])
+  game_action.update_attributes(init_info)
+  abort("GameActionの保存に失敗") if game_action.save() == false
+}
