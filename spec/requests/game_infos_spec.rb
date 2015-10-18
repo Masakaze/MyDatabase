@@ -34,4 +34,16 @@ describe "GameInfos" do
       it { should_not be_valid }
     end
   end
+
+  # GameKeyType
+  describe "Game Key Type" do
+    before { @game_key_type = GameKeyType.new(:name_en => "Test", :game_platform_id => 1) }
+    subject { @game_key_type }
+    it { should be_valid }
+
+    describe "when game_platform_id equal nil" do
+      before { @game_key_type.game_platform_id = nil }
+      it { should_not be_valid }
+    end
+  end
 end
