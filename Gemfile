@@ -46,6 +46,9 @@ group :development, :test do
 
   # テスト用ライブラリ
   gem 'rspec-rails', '2.13.1'
+
+  # N+1問題検出 @note 予約後がバッティングしてるらしくstack too deep的なエラーが出る config/environments/development.rbも一緒に修正
+#  gem 'bullet'
 end
 
 group :test do
