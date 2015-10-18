@@ -46,4 +46,16 @@ describe "GameInfos" do
       it { should_not be_valid }
     end
   end
+
+  # GameKey
+  describe "GameKey" do
+    before { @game_key = GameKey.new(:game_key_type_id => 1) }
+    subject { @game_key }
+    it { should be_valid }
+
+    describe "when GameKey game_key_type_id equal nil" do
+      before { @game_key.game_key_type_id = nil }
+      it { should_not be_valid }
+    end
+  end
 end
