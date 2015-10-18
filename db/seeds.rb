@@ -68,7 +68,7 @@ init_game_key_type_infos.each { |platform_name, init_infos|
 
   init_infos.each { |init_info|
     init_info[:game_platform_id] = platform.id
-    game_key_type = GameKeyType.find_or_create_by(:name_en => init_info[:name_en], :game_platform_id => init_info[:platform_id])
+    game_key_type = GameKeyType.find_or_create_by(:name_en => init_info[:name_en], :game_platform_id => init_info[:game_platform_id])
     game_key_type.update_attributes(init_info)
     abort("GameKeyTypeの保存に失敗しました\n#{game_key_type.errors.messages}") if game_key_type.save() == false
   }
