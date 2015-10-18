@@ -45,3 +45,31 @@ init_game_platforms.each { |info|
     p platform
   end
 }
+
+# GameKeyTypeの初期化
+init_game_key_type_infos = {
+  :PS4 => [
+           {:name_en => "Square", :sign => "四角"},
+           {:name_en => "Triangle", :sign  => "三角"},
+           {:name_en => "Circle", :sign => "丸"},
+           {:name_en => "Cross", :sign => "バツ"},
+  ],
+  :WiiU => [
+            {:name_en => "A", :sign => "A"},
+            {:name_en => "B", :sign => "B"},
+            {:name_en => "X", :sign => "X"},
+            {:name_en => "Y", :sign => "Y"},
+  ],
+}
+
+init_game_key_type_infos.each { |platform_name, init_infos|
+  platform = GamePlatform.find_by(:name_en => platform_name)
+  abort("GamePlatformに#{platform_name}はありません") if platform == nil
+
+  init_infos.each { |init_info|
+    init_info[:game_platform_id] = platform.id
+    game_key_type = GameKeyType.find_or_create_by(:name_en => init_info[:name_en], :game_platform_id => init_info[:platform_id])
+    game_key_type.update_attributes(init_info)
+    abort("GameKeyTypeの保存に失敗しました") if game_key_type.save() == false
+  }
+}

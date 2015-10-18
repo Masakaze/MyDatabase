@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151011030647) do
+ActiveRecord::Schema.define(version: 20151018084205) do
 
   create_table "game_genres", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -42,10 +42,21 @@ ActiveRecord::Schema.define(version: 20151011030647) do
     t.integer "game_platform_id", limit: 4
   end
 
+  create_table "game_key_types", force: :cascade do |t|
+    t.string   "name_en",          limit: 255
+    t.string   "sign",             limit: 255
+    t.integer  "game_platform_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "game_key_types", ["game_platform_id"], name: "fk_rails_21c793091f", using: :btree
+
   create_table "game_platforms", force: :cascade do |t|
     t.string   "name_en",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "game_key_types", "game_platforms"
 end
