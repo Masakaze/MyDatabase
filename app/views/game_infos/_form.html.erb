@@ -21,17 +21,8 @@
   </div>
 
   <%= render "form_game_genre", object: @game_info %>
+  <%= render "form_game_platform", object: @game_info %>
 
-  <div class="field">
-	<% if @game_info.game_platforms == nil %>
-		<%= select "game_info[game_platform_ids]", "", GamePlatform.all.map { |c| [c.name_en, c.id] }, :include_blank => true %>
-	<% else %>
-	<% @game_info.game_platforms.each do |game_platform| %>
-		<%= select "game_info[game_platform_ids]", "", [ [game_platform.name_en, game_platform.id], ["", ""] ] %>
-	<% end %>
-	<%= select "game_info[game_platform_ids]", "", GamePlatform.all.map { |c| [c.name_en, c.id] }, :include_blank => true %>
-	<% end %>
-  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
