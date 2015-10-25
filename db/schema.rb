@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018095145) do
+ActiveRecord::Schema.define(version: 20151025095836) do
 
   create_table "game_actions", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 20151018095145) do
     t.integer "game_platform_id", limit: 4
   end
 
+  create_table "game_key_configs", force: :cascade do |t|
+    t.integer  "game_platform_id", limit: 4
+    t.integer  "game_info_id",     limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "game_key_configs", ["game_info_id"], name: "fk_rails_7351c05732", using: :btree
+  add_index "game_key_configs", ["game_platform_id"], name: "fk_rails_4fcc60662f", using: :btree
+
   create_table "game_key_types", force: :cascade do |t|
     t.string   "name_en",          limit: 255
     t.string   "sign",             limit: 255
@@ -75,6 +85,8 @@ ActiveRecord::Schema.define(version: 20151018095145) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "game_key_configs", "game_infos"
+  add_foreign_key "game_key_configs", "game_platforms"
   add_foreign_key "game_key_types", "game_platforms"
   add_foreign_key "game_keys", "game_actions"
   add_foreign_key "game_keys", "game_key_types"

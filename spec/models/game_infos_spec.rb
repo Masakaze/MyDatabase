@@ -44,3 +44,30 @@ describe "GameKey" do
     it { should_not be_valid }
   end
 end
+
+describe "GameKeyConfigs" do
+  before do
+    @game_key_config = GameKeyConfig.new(:game_info_id => 1, :game_platform_id => 1)
+    @game_key_config_correct = @game_key_config.dup
+  end
+  subject { @game_key_config }
+  it { should be_valid }
+
+  describe "when GameKeyConfigs game_info_id equal nil" do
+    before do
+      @game_key_config = @game_key_config_correct.dup()
+      @game_key_config.game_info_id = nil
+    end
+
+    it { should_not be_valid }
+  end
+
+  describe "when GameKeyConfigs game_platform_id equal nil" do
+    before do
+      @game_key_config = @game_key_config_correct.dup()
+      @game_key_config.game_platform_id = nil
+    end
+
+    it { should_not be_valid }
+  end
+end
