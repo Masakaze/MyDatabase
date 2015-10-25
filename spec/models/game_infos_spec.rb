@@ -61,7 +61,8 @@ describe "GameKeyConfigs" do
   before do
     @dummy_game_info = GameInfo.find_or_create_by(:name_en => "DummyGameInfo", :name_jp => "ダミー")
     @dummy_game_platform = GamePlatform.find_or_create_by(:name_en => "PS4")
-    @game_key_config = GameKeyConfig.new(:game_info_id => 1, :game_platform_id => 1, :name_jp => "テスト")
+    @info = { :game_info_id => @dummy_game_info.id, :game_platform_id => @dummy_game_platform.id }
+    @game_key_config = GameKeyConfig.new(@info.merge(:name_jp => "テスト"))
     @game_key_config_correct = @game_key_config.dup
   end
   subject { @game_key_config }
@@ -85,9 +86,20 @@ describe "GameKeyConfigs" do
     it { should_not be_valid }
   end
 
-  describe "when GameKeyConfigs has duplicate parameter(game_info_id, game_platform_id, name_jp)" do
+  describe "when GameKeyConfigs can have duplicate paramter" do
     before do
-      duplicate_info = {:game_info_id => @dummy_game_info.id, :game_platform_id => @dummy_game_platform.id, :name_jp => "重複データ"}
+      duplicate_info1 = @info.merge(:name_jp => "重複OKデータ1")
+      first_save_data = GameKeyConfig.find_or_create_by(duplicate_info1)
+      duplicate_info2 = @info.merge(:name_jp => "重複OKデータ2")
+      @game_key_config = GameKeyConfig.new(duplicate_info2)
+    end
+
+    it { should be_valid }
+  end
+
+  describe "when GameKeyConfigs should'nt have duplicate parameter(game_info_id, game_platform_id, name_jp)" do
+    before do
+      duplicate_info = @info.merge(:name_jp => "重複データ")
       first_save_data = GameKeyConfig.find_or_create_by(duplicate_info)
       @game_key_config = GameKeyConfig.new(duplicate_info)
     end
