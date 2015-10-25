@@ -20,10 +20,36 @@
     <%= f.text_field :name_en %>
   </div>
 
+  <p>ジャンル</p>
   <%= render "form_game_genre", object: @game_info %>
+
+  <p>プラットフォーム</p>
   <%= render "form_game_platform", object: @game_info %>
+
+  <p>操作方法</p>
+  <div id="register_new_controller_manual_form"%>
+  </div>
+  <% if @is_rengister_new_controller_manual %>
+	  <p>新規操作方法登録</p>
+	  <div class="field">
+		<%= select "game_info[game_key_type_ids]", "", GameKey.all.map { |c| [c.name_en, c.id] }, :include_blank => true %>
+	  </div>
+  <% end %>
+  <% @game_info.game_key_configs.each do |key_config| %>
+	  <% key_config.game_keys.each do |key| %>
+	  	<%= key.game_key_type.name_en %>
+	  <% end %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
+
+<div id="btn_register_new_controller_manual">
+	<%= form_tag('/game_infos/register_new_controller_manual', :remote => true, :method => 'get') do %>
+		<%= hidden_field_tag :id, @game_info.id -%>
+		<%= submit_tag("新規操作方法登録", :class => 'btn btn-primary btn-sm') -%>
+	<% end %>
+</div>

@@ -6,4 +6,5 @@ class GameKeyConfig < ActiveRecord::Base
 
   belongs_to :game_info
   belongs_to :game_platform
+  has_and_belongs_to_many :game_keys
 end

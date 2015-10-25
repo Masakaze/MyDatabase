@@ -19,6 +19,7 @@ class GameInfosController < ApplicationController
 
   # GET /game_infos/1/edit
   def edit
+    @is_register_new_controller_manual = false
   end
 
   # POST /game_infos
@@ -70,6 +71,14 @@ class GameInfosController < ApplicationController
     @current_platform = params[:platform]
     render
   end
+
+  def register_new_controller_manual
+    @game_info = GameInfo.find(params[:id])
+    @is_register_new_controller_manual = true
+#    redirect_to "/game_infos/#{@game_info.id}/edit"
+#    render
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

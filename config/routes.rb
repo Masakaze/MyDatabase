@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :game_infos do
     collection do
       get 'switch_by_platform'
+      get 'register_new_controller_manual'
     end
   end
 
