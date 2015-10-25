@@ -19,16 +19,9 @@
     <%= f.label :name_en %><br>
     <%= f.text_field :name_en %>
   </div>
-  <div class="field">
-	<% if @game_info.game_genres == nil %>
-		<%= select "game_info[game_genre_ids]", "", GameGenre.all.map { |c| [c.name_jp, c.id] }, :include_blank => true %>
-	<% else %>
-	<% @game_info.game_genres.each do |game_genre| %>
-		<%= select "game_info[game_genre_ids]", "", [ [game_genre.name_jp, game_genre.id], ["", ""] ] %>
-	<% end %>
-	<%= select "game_info[game_genre_ids]", "", GameGenre.all.map { |c| [c.name_jp, c.id] }, :include_blank => true %>
-	<% end %>
-  </div>
+
+  <%= render "form_game_genre", object: @game_info %>
+
   <div class="field">
 	<% if @game_info.game_platforms == nil %>
 		<%= select "game_info[game_platform_ids]", "", GamePlatform.all.map { |c| [c.name_en, c.id] }, :include_blank => true %>
