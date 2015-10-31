@@ -1,2 +1,7 @@
 $("#btn_register_new_controller_manual").hide()
 $("#register_new_controller_manual_form").append("<p>新規操作方法登録</p>")
+
+var select_tag_start = "<select name=\"game_info[game_platform_ids][]\" id=\"game_info_game_platform_ids_\">";
+var select_tag_end = "</select>";
+
+$("#register_new_controller_manual_form").append(select_tag_start + select_tag_end)
