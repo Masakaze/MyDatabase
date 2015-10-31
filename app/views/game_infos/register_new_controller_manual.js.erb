@@ -1,11 +1,18 @@
 $("#btn_register_new_controller_manual").hide()
 $("#register_new_controller_manual_form").append("<p>新規操作方法登録</p>")
 
-var select_tag_start = "<select name=\"game_info[game_platform_ids][]\" id=\"game_info_game_platform_ids_\">";
-var select_tag_end = "</select>";
+// 指定プラットフォームの各ボタン操作選択用のselectタグ配置
+<% game_key_types = GameKeyType.where(:game_platform_id => @game_platform_id) %>
+<% game_actions = GameAction.all() %>
 
-var option_tag = "";
 
-alert("<%= @game_platform_id %>");
+<% game_key_types.each do |key_type| %>
+   var select_tag_start = "<select name=\"game_info[game_platform_ids][]\" id=\"game_info_game_platform_ids_\">";
+   var select_tag_end = "</select>";
 
-$("#register_new_controller_manual_form").append(select_tag_start + select_tag_end)
+   var option_tags = "<option value=\"\"></option>";
+   <% game_actions.each do |game_action| %>
+   		option_tags += "<option value=\"<%= game_action.id %>\"><%= game_action.name_jp %></option>";
+   <% end %>
+   $("#register_new_controller_manual_form").append("<p><%= key_type.sign %></p>" + select_tag_start + option_tags + select_tag_end + "<br>")
+<% end %>
