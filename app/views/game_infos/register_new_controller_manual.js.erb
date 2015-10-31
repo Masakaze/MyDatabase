@@ -4,4 +4,8 @@ $("#register_new_controller_manual_form").append("<p>新規操作方法登録</p
 var select_tag_start = "<select name=\"game_info[game_platform_ids][]\" id=\"game_info_game_platform_ids_\">";
 var select_tag_end = "</select>";
 
+var option_tag = "";
+
+alert("<%= @game_platform_id %>");
+
 $("#register_new_controller_manual_form").append(select_tag_start + select_tag_end)
