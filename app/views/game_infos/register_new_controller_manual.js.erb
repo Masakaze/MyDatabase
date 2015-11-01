@@ -1,11 +1,17 @@
 $("#btn_register_new_controller_manual").hide()
-$("#register_new_controller_manual_form").append("<p>新規操作方法登録</p>")
+
+var register_div = $("#register_new_controller_manual_form");
+
+register_div.append("<p>新規操作方法登録</p>")
 
 // 指定プラットフォームの各ボタン操作選択用のselectタグ配置
 <% game_key_types = GameKeyType.where(:game_platform_id => @game_platform_id) %>
 <% game_actions = GameAction.all() %>
 
-var table_tag = "<table><th>ボタン名</th><th>操作</th><tr>";
+register_div.append("<table id='register_new_controller_table'></table>")
+var table_tag = $("#register_new_controller_table");
+
+table_tag.append("<tr><th>ボタン名</th><th>操作</th></tr>");
 <% game_key_types.each do |key_type| %>
    var select_tag_start = "<select name=\"game_info[game_platform_ids][]\" id=\"game_info_game_platform_ids_\">";
    var select_tag_end = "</select>";
@@ -14,9 +20,6 @@ var table_tag = "<table><th>ボタン名</th><th>操作</th><tr>";
    <% game_actions.each do |game_action| %>
    		option_tags += "<option value=\"<%= game_action.id %>\"><%= game_action.name_jp %></option>";
    <% end %>
-   table_tag += "<th><%= key_type.sign %></th>" + "<th>" + select_tag_start + option_tags + select_tag_end + "</th><tr>";
+   table_tag.append("<tr><th><%= key_type.sign %></th>" + "<th>" + select_tag_start + option_tags + select_tag_end + "</th></tr>");
 //   $("#register_new_controller_manual_form").append("<th><%= key_type.sign %></th>" + "<th>" + select_tag_start + option_tags + select_tag_end + "</th><tr>")
 <% end %>
-
-table_tag += "</table>"
-$("#register_new_controller_manual_form").append(table_tag)
