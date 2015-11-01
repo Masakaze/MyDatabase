@@ -1,6 +1,7 @@
 $("#current_platform_field_value").text("<%= @current_platform != nil ? @current_platform.name_en : "" %>")
 
 var div_tag = $("#div_game_key_config");
+div_tag.empty(); // テーブルの情報を一旦リセット
 div_tag.show();
 
 var table_tag = $("<table></table>");
