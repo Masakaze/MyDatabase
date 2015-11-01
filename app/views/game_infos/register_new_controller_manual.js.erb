@@ -13,13 +13,23 @@ var table_tag = $("#register_new_controller_table");
 
 table_tag.append("<tr><th>ボタン名</th><th>操作</th></tr>");
 <% game_key_types.each do |key_type| %>
-   var select_tag_start = "<select name=\"game_info[game_platform_ids][]\" id=\"game_info_game_platform_ids_\">";
-   var select_tag_end = "</select>";
 
-   var option_tags = "<option value=\"\"></option>";
+   var line = $("<tr></tr>");
+   line.append("<th><%= key_type.sign %></th>");
+
+   var select_tag = $("<select></select>", {
+   	   			  	name: "game_info[game_platform_ids][]",
+					id: "game_info_game_platform_ids"
+   	   			  	});
+
+   select_tag.append("<option value=\"\"></option>");
+
    <% game_actions.each do |game_action| %>
-   		option_tags += "<option value=\"<%= game_action.id %>\"><%= game_action.name_jp %></option>";
+   		select_tag.append("<option value=\"<%= game_action.id %>\"><%= game_action.name_jp %></option>");
    <% end %>
-   table_tag.append("<tr><th><%= key_type.sign %></th>" + "<th>" + select_tag_start + option_tags + select_tag_end + "</th></tr>");
-//   $("#register_new_controller_manual_form").append("<th><%= key_type.sign %></th>" + "<th>" + select_tag_start + option_tags + select_tag_end + "</th><tr>")
+   var col = $("<th></th>");
+   col.append(select_tag);
+   line.append(col);
+
+   table_tag.append(line);
 <% end %>
