@@ -29,16 +29,12 @@
   <p>操作方法</p>
   <div id="register_new_controller_manual_form" style="display:none;">
 	<p>新規操作方法登録</p>
+	<%= hidden_field_tag "game_info[game_key_configs][][game_platform_id]", -1, {:id => 'game_key_configs_game_platform_id'} -%>
 	<%= button_tag type: 'button', onclick: "window.open('/game_infos/register_new_game_action_form', '新規アクション登録', 'width=500,height=400')" do %>
 		<%= "新規アクション登録" %>
 	<% end %>
   </div>
-  <% if @is_rengister_new_controller_manual %>
-	  <p>新規操作方法登録</p>
-	  <div class="field">
-		<%= select "game_info[game_key_type_ids]", "", GameKey.all.map { |c| [c.name_en, c.id] }, :include_blank => true %>
-	  </div>
-  <% end %>
+
   <% @game_info.game_key_configs.each do |key_config| %>
 	  <% key_config.game_keys.each do |key| %>
 	  	<%= key.game_key_type.name_en %>
