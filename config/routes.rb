@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     collection do
       get 'switch_by_platform'
       get 'register_new_controller_manual'
+      get 'register_new_game_action_form'
+      get 'register_new_game_action'
     end
   end
 

@@ -81,10 +81,15 @@ class GameInfosController < ApplicationController
 #    render
   end
 
-  def register_new_game_action
-
+  # 新規アクション登録フォーム
+  def register_new_game_action_form
+    render 'register_new_game_action_form'
   end
 
+  def register_new_game_action
+    game_action = GameAction.find_or_create_by(:name_en => params[:name_en], :name_jp => params[:name_jp])
+    @is_success = game_action.save
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

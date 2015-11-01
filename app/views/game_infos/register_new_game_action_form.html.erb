@@ -1,0 +1,7 @@
+<h1>新規アクション登録フォーム</h1>
+
+<%= form_tag('register_new_game_action', :remote => true, :method => 'get') do %>
+	<%= label "", "日本語名" %><%= text_field_tag :name_jp, "" %><br>
+	<%= label "", "英語名　" %><%= text_field_tag :name_en, "" %><br>
+	<%= submit_tag("新規アクション登録", :class => 'btn btn-primary btn-sm', :confirm => "新規アクションを登録しますか？") %>
+<% end %>
