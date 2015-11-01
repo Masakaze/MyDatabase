@@ -72,13 +72,17 @@ class GameInfosController < ApplicationController
     render
   end
 
+  # 新しい操作方法登録
   def register_new_controller_manual
     @game_info = GameInfo.find(params[:id])
     @game_platform_id = params[:game_platform_id]
 
-    @is_register_new_controller_manual = true
 #    redirect_to "/game_infos/#{@game_info.id}/edit"
 #    render
+  end
+
+  def register_new_game_action
+
   end
 
 
