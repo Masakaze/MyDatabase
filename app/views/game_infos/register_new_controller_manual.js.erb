@@ -22,7 +22,7 @@ table_tag.append("<tr><th>ボタン名</th><th>操作</th></tr>");
 
    // selectタグの内容全部一緒なのでeachで回す必要ないかも
    var select_tag = $("<select></select>", {
-   	   			  	name: "game_info[game_key_configs][][<%= key_type.id %>]",
+   	   			  	name: "game_info[game_key_config_infos][][<%= key_type.id %>]",
 					id: "game_key_select"
    	   			  	});
 

@@ -25,10 +25,10 @@ class GameInfosController < ApplicationController
   # POST /game_infos
   # POST /game_infos.json
   def create
-    @game_info = GameInfo.new(game_info_params)
+    @game_info = GameInfo.new(:name_jp => game_info_params[:name_jp], :name_en => game_info_params[:name_en])
     @game_info = update_game_genres(params[:game_info])
     @game_info = update_game_platforms(params[:game_info])
-    @game_info = update_game_key_configs(params[:game_info])
+#    @game_info = update_game_key_configs(params[:game_info])
 
     respond_to do |format|
       if @game_info.save
@@ -112,7 +112,7 @@ class GameInfosController < ApplicationController
 
       # 削除
       @game_info.game_genres.each { |game_genre|
-        next if genre_params[:game_genre_ids].include?(game_genre.id)
+        next if genre_params[:game_genre_ids].include?(game_genre.id.to_s)
         @game_info.game_genres.delete(game_genre)
       }
 
@@ -132,7 +132,7 @@ class GameInfosController < ApplicationController
 
       # 削除
       @game_info.game_platforms.each { |game_platform|
-        next if platform_params[:game_platform_ids].include?(game_platform.id)
+        next if platform_params[:game_platform_ids].include?(game_platform.id.to_s)
         @game_info.game_platforms.delete(game_platform)
       }
 
@@ -140,10 +140,11 @@ class GameInfosController < ApplicationController
     end
 
     def update_game_key_configs(key_config_params)
-      return @game_info if key_config_params[:game_key_configs] == nil
+      return @game_info if key_config_params[:game_key_config_infos] == nil
 
-      key_config_params[:game_key_configs].each { |game_key_config_info|
+      key_config_params[:game_key_config_infos].each { |game_key_config_info|
         game_platform_id = game_key_config_info.delete(:game_platform_id)
+        next if game_platform_id.to_i < 0
 
         game_key_config = GameKeyConfig.find_or_create_by(:game_platform_id => game_platform_id, :game_info_id => @game_info.id)
 
@@ -163,8 +164,10 @@ class GameInfosController < ApplicationController
 
         # 新規KeyConfigの場合は追加
         if game_key_config.new_record?
-          @game_info.key_configs << game_key_config
+          @game_info.game_key_configs << game_key_config
         end
+
+        game_key_config.save
       }
 
       return @game_info
@@ -172,6 +175,6 @@ class GameInfosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_info_params
-      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids => [], :game_platform_ids => [], :game_key_configs => [])
+      params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids => [], :game_platform_ids => [], :game_key_config_infos => [:game_platform_id])
     end
 end
