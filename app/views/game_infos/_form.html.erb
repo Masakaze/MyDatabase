@@ -27,8 +27,11 @@
   <%= render "form_game_platform", object: @game_info %>
 
   <p>操作方法</p>
-  <div id="register_new_controller_manual_form"%>
-	
+  <div id="register_new_controller_manual_form" style="display:none;">
+	<p>新規操作方法登録</p>
+		<%= form_tag('/game_infos/register_new_controller_manual', :remote => true, :method => 'get') do %>
+			<%= submit_tag("新規アクションボタン登録", :class => 'btn btn-primary btn-sm') -%>
+		<% end %>
   </div>
   <% if @is_rengister_new_controller_manual %>
 	  <p>新規操作方法登録</p>

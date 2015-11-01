@@ -1,8 +1,16 @@
+// 新規アクション登録フォーム表示
+register_new_action = function()
+{
+
+}
+
+
 $("#btn_register_new_controller_manual").hide()
 
 var register_div = $("#register_new_controller_manual_form");
+register_div.show();
 
-register_div.append("<p>新規操作方法登録</p>")
+//register_div.append("<p>新規操作方法登録</p>")
 
 // 指定プラットフォームの各ボタン操作選択用のselectタグ配置
 <% game_key_types = GameKeyType.where(:game_platform_id => @game_platform_id) %>
