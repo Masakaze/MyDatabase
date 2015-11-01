@@ -11,17 +11,25 @@
 </p>
 
 <div id='current_platform_field'>
-  表示中のプラットフォーム:<span id='current_platform_field_value'><%= @current_platform %></span>
+  表示中のプラットフォーム:<span id='current_platform_field_value'></span>
 </div>
 <%
 platforms = @game_info.game_platforms != nil ? @game_info.game_platforms : []
 %>
 <% platforms.each do |platform| %>
 	<%= form_tag('/game_infos/switch_by_platform', :remote => true, :method => 'get') do %>
+		<%= hidden_field_tag :id, @game_info.id -%>
 		<%= hidden_field_tag :platform, platform.name_en -%>
 		<%= submit_tag(platform.name_en, :class => 'btn btn-primary btn-sm') -%>
 	<% end %>
 <% end %>
+
+
+
+<div id='div_game_key_config', style='display:none;'>
+</div>
+
+
 
 <%= link_to 'Edit', edit_game_info_path(@game_info) %> |
 <%= link_to 'Back', game_infos_path %>

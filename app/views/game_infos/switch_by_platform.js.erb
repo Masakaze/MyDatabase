@@ -1,3 +1,28 @@
-//alert("<%= @current_platform %>");
+$("#current_platform_field_value").text("<%= @current_platform != nil ? @current_platform.name_en : "" %>")
 
-$("#current_platform_field_value").text("<%= @current_platform %>")
+var div_tag = $("#div_game_key_config");
+div_tag.show();
+
+var table_tag = $("<table></table>");
+table_tag.append( $("<th></th>", { html: "ボタン" }) );
+table_tag.append( $("<th></th>", { html: "アクション" }) );
+div_tag.append(table_tag);
+<% 
+   game_key_config = nil
+   if @current_platform != nil
+   	  game_key_config = GameKeyConfig.find_by(:game_info_id => @game_info.id, :game_platform_id => @current_platform.id)
+   end
+%>
+
+<% if game_key_config != nil %>
+	<% game_key_config.game_keys.each do |game_key| %>
+	   <% game_key_type = GameKeyType.find(game_key.game_key_type_id) %>
+	   <% game_action = GameAction.find(game_key.game_action_id) %>
+
+	   var line = $("<tr></tr>");
+	   line.append( $("<th></th>", { html: "<%= game_key_type.sign %>" }) );
+	   line.append( $("<th></th>", { html: "<%= game_action.name_jp %>" }) );
+
+	   table_tag.append(line);
+	<% end %>
+<% end %>

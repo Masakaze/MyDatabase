@@ -70,7 +70,8 @@ class GameInfosController < ApplicationController
   end
 
   def switch_by_platform
-    @current_platform = params[:platform]
+    @game_info = GameInfo.find(params[:id])
+    @current_platform = GamePlatform.find_by(:name_en => params[:platform])
     render
   end
 
@@ -155,11 +156,15 @@ class GameInfosController < ApplicationController
           game_key.save if game_key.new_record?
 
           # 同じキータイプの場合は入れ替え
+          is_exist_same_key_type = false
           game_key_config.game_keys.each_with_index { |current_game_key, idx|
             # ボタンタイプが違う場合は特になにもしない
             next if current_game_key.game_key_type_id != game_key.game_key_type_id
-            game_key_configs.game_keys[idx] = game_key
+            is_exist_same_key_type = true
+            game_key_config.game_keys[idx] = game_key
           }
+
+          game_key_config.game_keys << game_key if is_exist_same_key_type == false
         }
 
         # 新規KeyConfigの場合は追加
@@ -175,6 +180,7 @@ class GameInfosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_info_params
+      # キーにモデルと同一名は使えないみたい(ex. :game_key_configs)
       params.require(:game_info).permit(:name_jp, :name_en, :game_genre_ids => [], :game_platform_ids => [], :game_key_config_infos => [:game_platform_id])
     end
 end
