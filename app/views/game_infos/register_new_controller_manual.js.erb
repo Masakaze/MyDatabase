@@ -25,11 +25,9 @@ table_tag.append("<tr><th>ボタン名</th><th>操作</th></tr>");
    select_tag.append("<option value=\"\"></option>");
 
    <% game_actions.each do |game_action| %>
-   		select_tag.append("<option value=\"<%= game_action.id %>\"><%= game_action.name_jp %></option>");
+   	  select_tag.append( $("<option></option>", { value: "<%= game_action.id %>", html: "<%= game_action.name_jp %>" }) );
    <% end %>
-   var col = $("<th></th>");
-   col.append(select_tag);
-   line.append(col);
+   line.append( $("<th></th>").append(select_tag) );
 
    table_tag.append(line);
 <% end %>
