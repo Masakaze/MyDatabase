@@ -25,9 +25,10 @@ table_tag.append("<tr><th>ボタン名</th><th>操作</th></tr>");
    var line = $("<tr></tr>");
    line.append("<th><%= key_type.sign %></th>");
 
+   // selectタグの内容全部一緒なのでeachで回す必要ないかも
    var select_tag = $("<select></select>", {
    	   			  	name: "game_info[game_platform_ids][]",
-					id: "game_info_game_platform_ids"
+					id: "game_key_select"
    	   			  	});
 
    select_tag.append("<option value=\"\"></option>");

@@ -1,1 +1,12 @@
-alert("新規アクション登録");
+
+var select_tags = window.opener.$("#game_key_select");
+
+for( var i=0; i < select_tags.length; i++ ){
+	 select_tags.eq(i).append( $("<option></option>", { value: "<= @game_action.id %>", html: "<%= @game_action.name_jp %>" }) );
+}
+
+if( <%= @is_success %> == false ){
+	alert("新規アクション登録失敗");
+}
+
+window.close();

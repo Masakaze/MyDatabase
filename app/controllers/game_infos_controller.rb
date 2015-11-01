@@ -87,8 +87,8 @@ class GameInfosController < ApplicationController
   end
 
   def register_new_game_action
-    game_action = GameAction.find_or_create_by(:name_en => params[:name_en], :name_jp => params[:name_jp])
-    @is_success = game_action.save
+    @game_action = GameAction.find_or_create_by(:name_en => params[:name_en], :name_jp => params[:name_jp])
+    @is_success = @game_action.save
   end
 
   private
