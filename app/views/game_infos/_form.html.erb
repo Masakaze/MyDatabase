@@ -51,7 +51,7 @@
 
 <div id="btn_register_new_controller_manual">
   	<% @game_info.game_platforms.each do |platform| %>
-		<% next if GameKeyConfig.where(:game_platform_id => platform.id).blank? == false %>
+		<% next if GameKeyConfig.where(:game_platform_id => platform.id, :game_info_id => @game_info.id).blank? == false %>
 		<%= form_tag('/game_infos/register_new_controller_manual', :remote => true, :method => 'get') do %>
 			<%= hidden_field_tag :id, @game_info.id -%>
 			<%= hidden_field_tag :game_platform_id, platform.id -%>
