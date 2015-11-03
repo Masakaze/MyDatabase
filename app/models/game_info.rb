@@ -7,5 +7,6 @@ class GameInfo < ActiveRecord::Base
 
   has_and_belongs_to_many :game_genres
   has_and_belongs_to_many :game_platforms
+  validates :game_platforms, presence: true
   has_many :game_key_configs, :autosave => true
 end

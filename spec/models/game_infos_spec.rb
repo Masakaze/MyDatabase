@@ -61,6 +61,10 @@ describe "GameKeyConfigs" do
   before do
     @dummy_game_info = GameInfo.find_or_create_by(:name_en => "DummyGameInfo", :name_jp => "ダミー")
     @dummy_game_platform = GamePlatform.find_or_create_by(:name_en => "PS4")
+    if @dummy_game_info.new_record?
+      @dummy_game_info.game_platforms << @dummy_game_platform 
+      @dummy_game_info.save
+    end
     @info = { :game_info_id => @dummy_game_info.id, :game_platform_id => @dummy_game_platform.id }
     @game_key_config = GameKeyConfig.new(@info.merge(:name_jp => "テスト"))
     @game_key_config_correct = @game_key_config.dup
@@ -110,6 +114,7 @@ describe "GameKeyConfigs" do
   # GameInfoがsaveされた時にGameKeyConfigがsaveされる依存関係の確認
   it "when game_key_config saved with game_info" do
     game_info = GameInfo.new(:name_jp => "ゲームキーコンフィグ確認", :name_en => "GameKeyConfigConfirm")
+    game_info.game_platforms << GamePlatform.find(1)
     game_info.save
     @game_key_config = GameKeyConfig.new(:game_info_id => game_info.id, :game_platform_id => 1)
     @game_key_config.save
