@@ -107,4 +107,24 @@ describe "GameKeyConfigs" do
     it { should_not be_valid }
   end
 
+  # GameInfoがsaveされた時にGameKeyConfigがsaveされる依存関係の確認
+  it "when game_key_config saved with game_info" do
+    game_info = GameInfo.new(:name_jp => "ゲームキーコンフィグ確認", :name_en => "GameKeyConfigConfirm")
+    game_info.save
+    @game_key_config = GameKeyConfig.new(:game_info_id => game_info.id, :game_platform_id => 1)
+    @game_key_config.save
+    game_key = GameKey.new(:game_key_type_id => 1, :game_action_id => 1)
+    game_key.save
+    @game_key_config.game_keys << game_key # 別のテーブルの値が変更されているだけ
+    #puts @game_key_config.changes # {}
+    game_info.game_key_configs << @game_key_config
+
+    @game_key_config.game_platform_id = 2
+    expect(@game_key_config.changed?).to eq true
+    #puts @game_key_config.changes # {:game_platform_id => [1,2] }
+    game_info.save
+
+    expect(@game_key_config.changed?).to eq false
+  end
+
 end
