@@ -29,6 +29,21 @@ describe "GameInfos" do
 
   # 更新用のページ
   describe "EditPage" do
+    update_button = "新規作成"
+    register_new_controller_button_base = "新規作成方法登録"
+
+    before do
+      @game_info = GameInfo.new(:name_jp => "テスト")
+      @game_info.save
+    end
+=begin
+    it "exist register controller button" do
+      visit edit_game_info_path(@game_info)
+      GamePlatform.all().each { |game_platform|
+         expect(find("#register_new_controller_#{game_platform.name_en}")['value']).to eq "[#{game_platform.name_en}]#{register_new_controller_button_base}"
+      }
+    end
+=end
   end
 
   describe "TopPage" do

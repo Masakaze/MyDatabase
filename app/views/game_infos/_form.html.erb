@@ -55,7 +55,9 @@
 		<%= form_tag('/game_infos/register_new_controller_manual', :remote => true, :method => 'get') do %>
 			<%= hidden_field_tag :id, @game_info.id -%>
 			<%= hidden_field_tag :game_platform_id, platform.id -%>
-			<%= submit_tag("[#{platform.name_en}]新規操作方法登録", :class => 'btn btn-primary btn-sm') -%>
+			<% button_name = "[#{platform.name_en}]新規操作方法登録" %>
+			<% button_id = "register_new_controller_#{platform.name_en}" %>
+			<%= submit_tag(button_name, :class => 'btn btn-primary btn-sm', :id => button_id) %>
 		<% end %>
 	<% end %>
 </div>
