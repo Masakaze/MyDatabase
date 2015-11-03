@@ -1,6 +1,28 @@
 require 'spec_helper'
 
 describe "GameInfos" do
+
+  # 新規作成のページ
+  describe "NewPage" do
+    it "NewPage should be" do
+      visit '/game_infos/new'
+      fill_in "日本語名", with: "テスト"
+      fill_in "英語名", with: "test"
+      
+      game_genre = GameGenre.first
+      select game_genre.name_jp, from: "game_info_game_genre_ids_"
+
+      game_platform = GamePlatform.first
+      select game_platform.name_en, from: "game_info_game_platform_ids_"
+
+      expect { click_button "新規作成" }.to change(GameInfo, :count).by(1)
+    end
+  end
+
+  # 更新用のページ
+  describe "EditPage" do
+  end
+
   describe "TopPage" do
     it "TopPage's content should be" do
       visit '/game_infos'

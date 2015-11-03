@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name_jp %><br>
+    <%= f.label :name_jp, "日本語名" %><br>
     <%= f.text_field :name_jp %>
   </div>
   <div class="field">
-    <%= f.label :name_en %><br>
+    <%= f.label :name_en, "英語名" %><br>
     <%= f.text_field :name_en %>
   </div>
 
@@ -44,7 +44,7 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "新規作成" %>
   </div>
 
 <% end %>
