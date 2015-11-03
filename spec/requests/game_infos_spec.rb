@@ -21,7 +21,7 @@ describe "GameInfos" do
       select game_genre.name_jp, from: "game_info_game_genre_ids_"
 
       game_platform = GamePlatform.first
-      select game_platform.name_en, from: "game_info_game_platform_ids_"
+      select game_platform.name_en, from: "game_platform_add"
 
       expect { click_button create_button }.to change(GameInfo, :count).by(1)
     end
@@ -30,16 +30,29 @@ describe "GameInfos" do
   # 更新用のページ
   describe "EditPage" do
     update_button = "新規作成"
-    register_new_controller_button_base = "新規作成方法登録"
+    register_new_controller_button_base = "新規操作方法登録"
 
     before do
       @game_info = GameInfo.find_or_create_by(:name_jp => "テスト")
       if @game_info.new_record?
-        GamePlatform.all().each { |game_platform| @game_info.game_platforms << game_platform }
+        GamePlatform.all().each { |game_platform|
+          next if game_platform.id == 1 # 1個だけ登録を余しておく
+          @game_info.game_platforms << game_platform
+        }
         @game_info.save
       end
     end
+
+    # プラットフォーム一つ追加
+    it "add game_platform" do
+      visit edit_game_info_path(@game_info)
+      game_platform = GamePlatform.find(1)
+      select game_platform.name_en, from: "game_platform_add"
+      expect { click_button update_button }.to change(@game_info.game_platforms, :count).by(1)
+    end
+
 =begin
+    # 新規登録ゲームの場合はプラットフォームごとに新規登録ボタンが表示される
     it "exist register controller button" do
       visit edit_game_info_path(@game_info)
       @game_info.game_platforms.all().each { |game_platform|
@@ -47,6 +60,7 @@ describe "GameInfos" do
       }
     end
 =end
+    # 操作方法の登録
 
   end
 
