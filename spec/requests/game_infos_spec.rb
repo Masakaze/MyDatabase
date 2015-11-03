@@ -4,7 +4,15 @@ describe "GameInfos" do
 
   # 新規作成のページ
   describe "NewPage" do
-    it "NewPage should be" do
+    create_button = "新規作成"
+
+    it "Wrong info" do
+      visit '/game_infos/new'
+      fill_in "英語名", with: "Test"
+
+      expect { click_button create_button }.not_to change(GameInfo, :count)
+    end
+    it "Corret info" do
       visit '/game_infos/new'
       fill_in "日本語名", with: "テスト"
       fill_in "英語名", with: "test"
@@ -15,7 +23,7 @@ describe "GameInfos" do
       game_platform = GamePlatform.first
       select game_platform.name_en, from: "game_info_game_platform_ids_"
 
-      expect { click_button "新規作成" }.to change(GameInfo, :count).by(1)
+      expect { click_button create_button }.to change(GameInfo, :count).by(1)
     end
   end
 
