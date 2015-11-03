@@ -33,17 +33,21 @@ describe "GameInfos" do
     register_new_controller_button_base = "新規作成方法登録"
 
     before do
-      @game_info = GameInfo.new(:name_jp => "テスト")
-      @game_info.save
+      @game_info = GameInfo.find_or_create_by(:name_jp => "テスト")
+      if @game_info.new_record?
+        GamePlatform.all().each { |game_platform| @game_info.game_platforms << game_platform }
+        @game_info.save
+      end
     end
 =begin
     it "exist register controller button" do
       visit edit_game_info_path(@game_info)
-      GamePlatform.all().each { |game_platform|
+      @game_info.game_platforms.all().each { |game_platform|
          expect(find("#register_new_controller_#{game_platform.name_en}")['value']).to eq "[#{game_platform.name_en}]#{register_new_controller_button_base}"
       }
     end
 =end
+
   end
 
   describe "TopPage" do
@@ -56,7 +60,8 @@ describe "GameInfos" do
 
   describe "GameInfoRegister" do
     before do
-      @game_info = GameInfo.new(name_jp: "テストゲーム", name_en: "testgame2")
+      @game_info = GameInfo.find_or_create_by(name_jp: "テストゲーム")
+      @game_info.game_platforms << GamePlatform.find(1) if @game_info.new_record?
     end
 
     subject { @game_info}
