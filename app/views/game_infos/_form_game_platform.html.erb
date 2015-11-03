@@ -1,5 +1,8 @@
 <div class="field">
   <% if @game_info.game_platforms == nil %>
+<%
+# ここ通らないかも
+%>
 	  <%= select "game_info[game_platform_ids]", "", GamePlatform.all.map { |c| [c.name_en, c.id] }, :include_blank => true %>
   <% else %>
 	  <% @game_info.game_platforms.each do |game_platform| %>
