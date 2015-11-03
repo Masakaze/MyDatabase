@@ -51,7 +51,6 @@ describe "GameInfos" do
       expect { click_button update_button }.to change(@game_info.game_platforms, :count).by(1)
     end
 
-=begin
     # 新規登録ゲームの場合はプラットフォームごとに新規登録ボタンが表示される
     it "exist register controller button" do
       visit edit_game_info_path(@game_info)
@@ -59,7 +58,7 @@ describe "GameInfos" do
          expect(find("#register_new_controller_#{game_platform.name_en}")['value']).to eq "[#{game_platform.name_en}]#{register_new_controller_button_base}"
       }
     end
-=end
+
     # 操作方法の登録
 
   end
