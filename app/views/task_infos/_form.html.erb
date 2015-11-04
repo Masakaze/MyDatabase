@@ -20,7 +20,8 @@
     <%= f.text_field :detail %>
   </div>
   <div class="field">
-	<%= select "task_info[estimate_time_type_id]", "", TaskTimeType.all().map{ |c| [c.name_jp, c.id] }, {}, {:id => "estimate_time_select"} %>
+	<% # @fixme selectの第１引数をtask_infosにするなら第２引数は実際にあるaccessorでないとだめらしい %>
+	<%= select "task_infos", "estimate_time_type_id", TaskTimeType.all().map{ |c| [c.name_jp, c.id] }, {}, {:id => "estimate_time_select"} %>
   </div>
   <div class="actions">
     <%= f.submit %>
