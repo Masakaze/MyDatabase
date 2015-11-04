@@ -6,6 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+$:.unshift(File.join(File.dirname(__FILE__), "seeds_helper"))
+require 'seeds_task_db'
+
 # GameGenreの初期化
 init_game_genres = [
                    {:name_jp => "アクション", :name_en => "Action"},
@@ -83,3 +86,6 @@ init_game_action_infos.each { |init_info|
   game_action.update_attributes(init_info)
   abort("GameActionの保存に失敗\n#{game_action.errors.messages}") if game_action.save() == false
 }
+
+# TaskDB
+SeedsHelperTaskDB::execute
