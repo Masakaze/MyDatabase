@@ -19,6 +19,9 @@
     <%= f.label :detail, "詳細" %><br>
     <%= f.text_field :detail %>
   </div>
+  <div class="field">
+	<%= select "task_info[estimate_time_type_id]", "", [ ["未指定", ""] ], {}, {:id => "estimate_time_select"} %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
