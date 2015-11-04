@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :task_infos
   resources :game_genres
   resources :game_infos do
     collection do
