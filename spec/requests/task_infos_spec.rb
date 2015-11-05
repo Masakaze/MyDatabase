@@ -28,7 +28,14 @@ describe "NewPage" do
 end
 
 describe "ShowPage" do
+  it "ShowPage have" do
+    info = {:title => "ダミータイトル", :detail => "ダミー詳細"}
+    task_info = TaskInfo.create(info)
+    visit task_info_path(task_info)
 
+    expect(page).to have_content info[:title]
+    expect(page).to have_content info[:detail]
+  end
 end
 
 describe "IndexPage" do
