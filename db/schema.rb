@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104145309) do
+ActiveRecord::Schema.define(version: 20151105143915) do
 
   create_table "game_actions", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -92,10 +92,11 @@ ActiveRecord::Schema.define(version: 20151104145309) do
   end
 
   create_table "task_infos", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "detail",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "title",                      limit: 255
+    t.string   "detail",                     limit: 255
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "estimate_task_time_type_id", limit: 4
   end
 
   create_table "task_time_types", force: :cascade do |t|

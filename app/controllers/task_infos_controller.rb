@@ -69,6 +69,6 @@ class TaskInfosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_info_params
-      params.require(:task_info).permit(:title, :detail)
+      params.require(:task_info).permit(:title, :detail, :estimate_task_time_type_id)
     end
 end
