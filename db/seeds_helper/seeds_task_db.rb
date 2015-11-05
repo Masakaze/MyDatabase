@@ -21,6 +21,20 @@ module SeedsHelperTaskDB
       end
     }
 
+    # TaskStatus
+    init_task_status = [
+                        {:name_jp => "未着手"},
+                        {:name_jp => "作業中"},
+                        {:name_jp => "完了"},
+                        ]
+    init_task_status.each { |info|
+      task_status = TaskStatus.find_or_create_by(info)
+      if task_status.new_record?
+        abort("TaskStatus:(#{task_status.name_jp})の追加に失敗\n#{task_status.errors.messages}") if task_status.save == false
+        puts "TaskStatus:(#{task_status.name_jp})追加"
+      end
+    }
+
   end
 
 end
