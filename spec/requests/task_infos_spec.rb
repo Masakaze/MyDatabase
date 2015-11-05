@@ -39,5 +39,10 @@ describe "ShowPage" do
 end
 
 describe "IndexPage" do
+  it "IndexPage have" do
+    visit task_infos_path
 
+    expect(page).to have_content "タイトル"
+    expect(page).to have_content "詳細"
+  end
 end

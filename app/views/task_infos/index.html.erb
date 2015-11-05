@@ -5,7 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>Title</th>
+      <th>タイトル</th>
+	  <th>詳細</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
     <% @task_infos.each do |task_info| %>
       <tr>
         <td><%= task_info.title %></td>
+		<td><%= task_info.detail %></td>
         <td><%= link_to 'Show', task_info %></td>
         <td><%= link_to 'Edit', edit_task_info_path(task_info) %></td>
         <td><%= link_to 'Destroy', task_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
