@@ -15,11 +15,15 @@ describe "NewPage" do
   it "Correct Info" do
     visit new_task_info_path
 
-    fill_in "タイトル", with: "テスト"
-    fill_in "詳細", with: "テストの詳細"
-    select TaskTimeType.first.name_jp, from: estimate_time_select_id
+    info = { :title => "タイトルテスト", :detail => "テスト詳細", :task_time_id => TaskTimeType.first.id }
+
+    fill_in "タイトル", with: info[:title]
+    fill_in "詳細", with: info[:detail]
+    select TaskTimeType.find(info[:task_time_id]).name_jp, from: estimate_time_select_id
 
     expect { click_button create_button }.to change(TaskInfo, :count).by(1)
+    expect(TaskInfo.find_by(info)).not_to eq nil
+
   end
 end
 
