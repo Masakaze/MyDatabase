@@ -24,7 +24,7 @@ class TaskInfosController < ApplicationController
   # POST /task_infos
   # POST /task_infos.json
   def create
-    @task_info = TaskInfo.new(task_info_params)
+    @task_info = TaskInfo.new(task_info_params.merge(:task_status_id => TaskStatus.task_status_not_started.id))
 
     respond_to do |format|
       if @task_info.save
