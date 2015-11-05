@@ -22,7 +22,9 @@ describe "NewPage" do
     select TaskTimeType.find(info[:estimate_task_time_type_id]).name_jp, from: estimate_time_select_id
 
     expect { click_button create_button }.to change(TaskInfo, :count).by(1)
-    expect(TaskInfo.find_by(info)).not_to eq nil
+    task_info = TaskInfo.find_by(info)
+    expect(task_info).not_to eq nil
+    expect(task_info.task_status_id).to eq TaskStatus.task_status_not_started.id
 
   end
 end
