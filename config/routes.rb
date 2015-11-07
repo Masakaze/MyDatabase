@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     end
   end
 
+  # 管理者ページ
+  namespace :admin do
+    get 'task_db', to: 'task_dbs#index'
+    get 'task_db/resave_task_infos', to: 'task_dbs#resave_task_infos'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
