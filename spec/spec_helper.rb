@@ -34,4 +34,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include Capybara::DSL
+
+  # rspecでevaluate_script使用 @note 使用する場合は 「it "...", js: true do」とするとそのテストだけwebkitを使ってくれる
+  Capybara.javascript_driver = :webkit
 end
