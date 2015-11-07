@@ -2,6 +2,16 @@
 
 <h1>Listing Task Infos</h1>
 
+<script type="text/javascript">
+<!--
+function reload_index_page(){
+	window.location.href = "<%= task_infos_path %>?view_status_name=" + $("#view_status_select").val();
+}
+-->
+</script>
+
+<%= select "", "", TaskStatus.all.map { |c| ["#{c.name_jp}のみ表示", c.name_jp] }, {:include_blank => true, :selected => @view_status_name}, {:onchange => "reload_index_page()", :id => "view_status_select"} %>
+
 <table>
   <thead>
     <tr>

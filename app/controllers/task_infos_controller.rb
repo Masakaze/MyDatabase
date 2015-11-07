@@ -5,7 +5,12 @@ class TaskInfosController < ApplicationController
   # GET /task_infos.json
   def index
 #    @task_infos = TaskInfo.all
-    @task_infos = TaskInfo.includes(:task_status).where("task_status_id not in (#{TaskStatus.task_status_finish.id})")
+    @view_status_name = params[:view_status_name]
+    if @view_status_name == nil || @view_status_name == ""
+      @task_infos = TaskInfo.includes(:task_status).where("task_status_id not in (#{TaskStatus.task_status_finish.id})")
+    else
+      @task_infos = TaskInfo.includes(:task_status).where("task_status_id in (#{TaskStatus.find_by(:name_jp => @view_status_name).id})")
+    end
   end
 
   # GET /task_infos/1
