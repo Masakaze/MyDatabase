@@ -1,5 +1,5 @@
 class TaskInfosController < ApplicationController
-  before_action :set_task_info, only: [:show, :edit, :update, :destroy, :finish_task]
+  before_action :set_task_info, only: [:show, :edit, :update, :destroy, :task_status_change]
 
   # GET /task_infos
   # GET /task_infos.json
@@ -61,10 +61,10 @@ class TaskInfosController < ApplicationController
     end
   end
 
-  # PUT /task_infos/1/finish_task
-  def finish_task
-    @task_info.task_status_id = TaskStatus.task_status_finish.id
-    msg = @task_info.save ? "Task finish" : "Task finish process failed"
+  # PUT /task_infos/1/task_status_change
+  def task_status_change
+    @task_info.task_status_id = params[:task_status_id]
+    msg = @task_info.save ? "Task status changed" : "Task status change process failed"
     respond_to do |format|
       format.html { redirect_to task_info_path(@task_info), notice: msg }
       format.json { head :no_content }

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :task_infos do
     collection do
-      get 'finish_task'
+      get 'task_status_change'
     end
   end
   resources :game_genres

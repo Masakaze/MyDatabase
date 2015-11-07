@@ -8,10 +8,13 @@
   <%= @task_info.detail %><br>
 </p>
 
+<!-- タスク開始ボタン -->
+
 <!-- タスク完了ボタン -->
-<%= form_tag("finish_task", :method => 'get') do %>
+<%= form_tag("task_status_change", :method => 'get') do %>
 	<div class="actions">
 	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_finish_button_task_id" } -%>
+	  <%= hidden_field_tag :task_status_id, TaskStatus.task_status_finish.id %>
 	  <%= submit_tag "タスク完了", { :id => "task_finish_button" } %>
 	</div>
 <% end %>
