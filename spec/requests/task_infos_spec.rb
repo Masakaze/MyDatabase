@@ -66,7 +66,6 @@ describe "IndexPage" do
 
     # デフォルトでは完了タスクは非表示に
     page.all("#show_task_status").each { |show_task_status|
-      puts show_task_status.text
       expect(show_task_status.text).not_to eq TaskStatus.task_status_finish.name_jp
     }
   end

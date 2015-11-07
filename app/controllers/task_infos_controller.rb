@@ -4,7 +4,8 @@ class TaskInfosController < ApplicationController
   # GET /task_infos
   # GET /task_infos.json
   def index
-    @task_infos = TaskInfo.all
+#    @task_infos = TaskInfo.all
+    @task_infos = TaskInfo.includes(:task_status).where("task_status_id not in (#{TaskStatus.task_status_finish.id})")
   end
 
   # GET /task_infos/1
