@@ -66,7 +66,7 @@ class TaskInfosController < ApplicationController
     @task_info.task_status_id = params[:task_status_id]
     msg = @task_info.save ? "Task status changed" : "Task status change process failed"
     respond_to do |format|
-      format.html { redirect_to task_info_path(@task_info), notice: msg }
+      format.html { redirect_to task_infos_path, notice: msg }
       format.json { head :no_content }
     end
   end
