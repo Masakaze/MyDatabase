@@ -1,5 +1,5 @@
 class TaskInfosController < ApplicationController
-  before_action :set_task_info, only: [:show, :edit, :update, :destroy]
+  before_action :set_task_info, only: [:show, :edit, :update, :destroy, :finish_task]
 
   # GET /task_infos
   # GET /task_infos.json
@@ -60,6 +60,17 @@ class TaskInfosController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # PUT /task_infos/1/finish_task
+  def finish_task
+    @task_info.task_status_id = TaskStatus.task_status_finish.id
+    msg = @task_info.save ? "Task finish" : "Task finish process failed"
+    respond_to do |format|
+      format.html { redirect_to task_info_path(@task_info), notice: msg }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

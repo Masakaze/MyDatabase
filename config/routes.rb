@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :task_infos
+  resources :task_infos do
+    collection do
+      get 'finish_task'
+    end
+  end
   resources :game_genres
   resources :game_infos do
     collection do

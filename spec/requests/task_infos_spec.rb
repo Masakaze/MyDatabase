@@ -33,7 +33,7 @@ describe "ShowPage" do
   info = {:title => "ダミータイトル", :detail => "ダミー詳細"}
   task_info = TaskInfo.create(info)
   task_finish_button = "タスク完了"
-  task_finish_button_id = "TaskFinishButton"
+  task_finish_button_id = "task_finish_button"
 
   it "ShowPage have" do
     visit task_info_path(task_info)
@@ -45,8 +45,8 @@ describe "ShowPage" do
 
   it "Task finish" do
     visit task_info_path(task_info)
-
-    expect { click_button task_finish_button }.to eq ( task_info.task_status_id == TaskStatus.task_status_finish.id )
+    click_button task_finish_button
+    expect(TaskInfo.find(task_info.id).task_status_id).to eq TaskStatus.task_status_finish.id
   end
 end
 
