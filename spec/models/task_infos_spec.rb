@@ -10,5 +10,11 @@ describe "TaskInfos" do
     # save後は未着手で初期化する
     task_info.save
     expect(task_info.task_status_id).to eq TaskStatus.task_status_not_started.id
+    # before_saveが暴走してないかチェック
+    TaskStatus.all.each { |task_status|
+      task_info.task_status_id = task_status.id
+      task_info.save
+      expect(task_info.task_status_id).to eq task_status.id
+    }
   end
 end
