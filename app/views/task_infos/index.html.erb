@@ -2,6 +2,8 @@
 
 <h1>Listing Task Infos</h1>
 
+<p>進捗状況で絞り込み</p>
+<!-- 絞り込みオプションが選択されたらリロード -->
 <script type="text/javascript">
 <!--
 function reload_index_page(){
@@ -9,7 +11,6 @@ function reload_index_page(){
 }
 -->
 </script>
-
 <%= select "", "", TaskStatus.all.map { |c| ["#{c.name_jp}のみ表示", c.name_jp] }, {:include_blank => true, :selected => @view_status_name}, {:onchange => "reload_index_page()", :id => "view_status_select"} %>
 
 <table>
