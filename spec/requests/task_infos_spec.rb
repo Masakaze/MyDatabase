@@ -32,6 +32,7 @@ end
 describe "ShowPage" do
   info = {:title => "ダミータイトル", :detail => "ダミー詳細"}
   task_info = TaskInfo.create(info)
+  task_start_button = "タスク開始"
   task_finish_button = "タスク完了"
   task_finish_button_id = "task_finish_button"
 
@@ -41,6 +42,12 @@ describe "ShowPage" do
     expect(page).to have_content info[:title]
     expect(page).to have_content info[:detail]
     expect(find("input##{task_finish_button_id}")).not_to eq nil
+  end
+
+  it "Task start" do
+    visit task_info_path(task_info)
+    click_button task_start_button
+    expect(TaskInfo.find(task_info.id).task_status_id).to eq TaskStatus.task_status_start.id
   end
 
   it "Task finish" do

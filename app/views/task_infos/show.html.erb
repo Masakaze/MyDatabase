@@ -8,10 +8,18 @@
   <%= @task_info.detail %><br>
 </p>
 
+<% task_status_change_url = "task_status_change" %>
 <!-- タスク開始ボタン -->
+<%= form_tag(task_status_change_url, :method => 'get') do %>
+	<div class="actions">
+	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_start_button_task_id" } -%>
+	  <%= hidden_field_tag :task_status_id, TaskStatus.task_status_start.id %>
+	  <%= submit_tag "タスク開始", { :id => "task_start_button" } %>
+	</div>
+<% end %>
 
 <!-- タスク完了ボタン -->
-<%= form_tag("task_status_change", :method => 'get') do %>
+<%= form_tag(task_status_change_url, :method => 'get') do %>
 	<div class="actions">
 	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_finish_button_task_id" } -%>
 	  <%= hidden_field_tag :task_status_id, TaskStatus.task_status_finish.id %>
