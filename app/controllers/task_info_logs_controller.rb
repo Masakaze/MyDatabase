@@ -1,8 +1,9 @@
 class TaskInfoLogsController < ApplicationController
-  before_action: set_task_info_log, only: [:create]
+  before_action :set_task_info_log, only: [:create]
 
   # POST /task_info_logs
   def create
+    abort
   end
 
   private

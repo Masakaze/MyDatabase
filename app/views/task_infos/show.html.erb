@@ -27,5 +27,17 @@
 	</div>
 <% end %>
 
+<!-- 新規作業メモ追加欄 -->
+<% task_info_log = TaskInfoLog.new(:task_info_id => @task_info.id) %>
+<%= form_for(task_info_log, :url => task_info_logs_path(task_info_log)) do |f| %>
+	<div class="field">
+	  <%= f.label :content, "作業メモ" %><br>
+	  <%= f.text_area :content, { :id => "task_info_log_content", :size => "60x4", :maxlength => 200 } %><br>
+	</div>
+	<div class="actions">
+	  <%= f.submit "作業メモ追加", { :id => "create_task_info_log_button" } %>
+	</div>
+<% end %>
+
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |
 <%= link_to 'Back', task_infos_path %>
