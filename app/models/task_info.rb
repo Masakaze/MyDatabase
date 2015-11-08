@@ -2,6 +2,7 @@ class TaskInfo < ActiveRecord::Base
 
   belongs_to :estimate_task_time_type, :class_name => "TaskTimeType"
   belongs_to :task_status
+  has_many :task_info_logs, :autosave => true
 
   before_save :before_save_callback
 

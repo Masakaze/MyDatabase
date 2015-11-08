@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  # TaskInfos
   resources :task_infos do
     collection do
       get 'task_status_change'
     end
   end
+  # TaskInfoLogs
+  post 'task_info_logs', to: 'task_info_logs#create'
+
+  #
   resources :game_genres
   resources :game_infos do
     collection do
