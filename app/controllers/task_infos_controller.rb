@@ -70,6 +70,10 @@ class TaskInfosController < ApplicationController
   # PUT /task_infos/1/task_status_change
   def task_status_change
     @task_info.task_status_id = params[:task_status_id]
+    if @task_info.changed?
+      task_info_log = TaskInfoLog.new(:content => "進捗を#{@task_info.task_status.name_jp}に変更", :task_info_id => @task_info.id)
+      @task_info.task_info_logs << task_info_log
+    end
     msg = @task_info.save ? "Task status changed" : "Task status change process failed"
     respond_to do |format|
       format.html { redirect_to task_infos_path, notice: msg }
