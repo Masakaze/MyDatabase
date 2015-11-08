@@ -13,7 +13,16 @@ function reload_index_page(){
 </script>
 <%= select "", "", TaskStatus.all.map { |c| ["#{c.name_jp}のみ表示", c.name_jp] }, {:include_blank => true, :selected => @view_status_name}, {:onchange => "reload_index_page()", :id => "view_status_select"} %>
 
-<%= render 'task_info_table' %>
+<% TaskStatus.all.each do |task_status| %>
+	<%
+		task_infos_partial = @task_infos.where(:task_status_id => task_status.id)
+		next if task_infos_partial.blank?
+	%>
+	<br>
+	<caption><%= task_status.name_jp %></caption>
+	<%= render partial: 'task_info_table', locals: {task_infos: task_infos_partial} %>
+	<br>
+<% end %>
 
 <br>
 
