@@ -1,0 +1,28 @@
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+	  <th>詳細</th>
+	  <th>進捗</th>
+	  <th>時間</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @task_infos.each do |task_info| %>
+      <tr>
+        <td><%= task_info.title %></td>
+		<td><%= task_info.detail %></td>
+		<% task_status = TaskStatus.find_by(:id => task_info.task_status_id) %>
+		<td id='show_task_status'><%= task_status != nil ? task_status.name_jp : "" %></td>
+		<% task_time = task_info.estimate_task_time_type %>
+		<td><%= task_time != nil ? task_time.name_jp : "" %></th>
+        <td><%= link_to 'Show', task_info %></td>
+        <td><%= link_to 'Edit', edit_task_info_path(task_info) %></td>
+        <td><%= link_to 'Destroy', task_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
