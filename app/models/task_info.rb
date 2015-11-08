@@ -1,6 +1,6 @@
 class TaskInfo < ActiveRecord::Base
 
-  belongs_to :estimate_task_type, :class => "TaskTimeType"
+  belongs_to :estimate_task_time_type, :class_name => "TaskTimeType"
   belongs_to :task_status
 
   before_save :before_save_callback
