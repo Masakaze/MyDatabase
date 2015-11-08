@@ -31,12 +31,22 @@
 <% task_info_log = TaskInfoLog.new(:task_info_id => @task_info.id) %>
 <%= form_for(task_info_log, :url => task_info_logs_path(task_info_log)) do |f| %>
 	<div class="field">
+	  <%= f.hidden_field :task_info_id %>
 	  <%= f.label :content, "作業メモ" %><br>
 	  <%= f.text_area :content, { :id => "task_info_log_content", :size => "60x4", :maxlength => 200 } %><br>
 	</div>
 	<div class="actions">
 	  <%= f.submit "作業メモ追加", { :id => "create_task_info_log_button" } %>
 	</div>
+<% end %>
+
+<br>
+<br>
+
+<!-- 作業メモ表示 -->
+<% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
+<% task_info_logs.each do |task_info_log| %>
+	<%= text_area_tag task_info_log, "#{task_info_log.content}\n\n作成:#{task_info_log.created_at} 更新:#{task_info_log.updated_at}", { :id => "show_task_info_log", :size => "60x4", :maxlength => 200 } %><br>
 <% end %>
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |

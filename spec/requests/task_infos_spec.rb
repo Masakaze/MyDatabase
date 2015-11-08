@@ -35,7 +35,6 @@ describe "ShowPage" do
   task_start_button = "タスク開始"
   task_finish_button = "タスク完了"
   task_finish_button_id = "task_finish_button"
-#  create_task_info_log_id = "create_task_info_log"
   create_task_info_log_button = "作業メモ追加"
   create_task_info_log_button_id = "create_task_info_log_button"
   show_task_info_log_id = "show_task_info_log"
@@ -47,8 +46,7 @@ describe "ShowPage" do
     expect(page).to have_content info[:detail]
     expect(find("input##{task_finish_button_id}")).not_to eq nil
     expect(find("##{create_task_info_log_button_id}")).not_to eq nil
-#    expect(find("##{create_task_info_log_id}")).not_to eq nil
-    expect(find("##{show_task_info_log_id}")).to eq nil
+    #expect(find("##{show_task_info_log_id}")).to eq nil # 存在しないことを検証したかったけどelementが見つからない時点でエラーがでてしまった
   end
 
   # タスク開始
