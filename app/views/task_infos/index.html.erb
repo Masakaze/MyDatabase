@@ -19,8 +19,7 @@ function reload_index_page(){
 		next if task_infos_partial.blank?
 	%>
 	<br>
-	<caption><%= task_status.name_jp %></caption>
-	<%= render partial: 'task_info_table', locals: {task_infos: task_infos_partial} %>
+	<%= render partial: 'task_info_table', locals: {task_infos: task_infos_partial, table_caption: task_status.name_jp} %>
 	<br>
 <% end %>
 
