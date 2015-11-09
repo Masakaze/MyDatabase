@@ -27,13 +27,17 @@
 	</div>
 <% end %>
 
+<%
+   task_info_log_width = 120
+%>
+
 <!-- 新規作業メモ追加欄 -->
 <% task_info_log = TaskInfoLog.new(:task_info_id => @task_info.id) %>
 <%= form_for(task_info_log, :url => task_info_logs_path(task_info_log)) do |f| %>
 	<div class="field">
 	  <%= f.hidden_field :task_info_id %>
 	  <%= f.label :content, "作業メモ" %><br>
-	  <%= f.text_area :content, { :id => "task_info_log_content", :size => "60x4", :maxlength => 200 } %><br>
+	  <%= f.text_area :content, { :id => "task_info_log_content", :size => "#{task_info_log_width.to_s}x4", :maxlength => 200 } %><br>
 	</div>
 	<div class="actions">
 	  <%= f.submit "作業メモ追加", { :id => "create_task_info_log_button" } %>
@@ -44,13 +48,10 @@
 <br>
 
 <!-- 作業メモ表示 -->
-<%
-   width = 120
-%>
 <% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
 <% task_info_logs.each do |task_info_log| %>
-	<% row = (task_info_log.content.length*1.5 / width).to_i + 4 # 少し余計にバッファとっておく %>
-	<%= text_area_tag task_info_log, "#{task_info_log.content}\n\n作成:#{task_info_log.created_at} 更新:#{task_info_log.updated_at}", { :id => "show_task_info_log", :size => "#{width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
+	<% row = (task_info_log.content.length*1.5 / task_info_log_width).to_i + 4 # 少し余計にバッファとっておく %>
+	<%= text_area_tag task_info_log, "#{task_info_log.content}\n\n作成:#{task_info_log.created_at} 更新:#{task_info_log.updated_at}", { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
 <% end %>
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |
