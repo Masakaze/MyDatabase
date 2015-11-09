@@ -45,7 +45,7 @@
 
 <!-- 作業メモ表示 -->
 <%
-   width = 60
+   width = 120
 %>
 <% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
 <% task_info_logs.each do |task_info_log| %>
