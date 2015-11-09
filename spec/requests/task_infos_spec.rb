@@ -81,6 +81,10 @@ describe "IndexPage" do
 
     expect(page).to have_content "タイトル"
     expect(page).to have_content "詳細"
+
+    # タイトルがshowpageへのリンクになっている
+    link_to_show_page_id = "title_link"
+    first("div#title_div").click_on first("a##{link_to_show_page_id}").text
   end
 
   it "IndexPage view_status_select" , js: true do
@@ -107,4 +111,5 @@ describe "IndexPage" do
       end
     }
   end
+
 end

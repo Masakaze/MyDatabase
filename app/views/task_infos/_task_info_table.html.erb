@@ -19,7 +19,7 @@
   <tbody>
     <% task_infos.each do |task_info| %>
       <tr>
-        <td width="25%"><%= task_info.title %></td>
+        <td width="25%"><div id="title_div"><%= link_to task_info.title, task_info_path(task_info), :id => "title_link" %></div></td>
 		<td width="40%"><%= task_info.detail %></td>
 		<% task_status = TaskStatus.find_by(:id => task_info.task_status_id) %>
 		<td width="10%", id='show_task_status'><%= task_status != nil ? task_status.name_jp : "" %></td>
