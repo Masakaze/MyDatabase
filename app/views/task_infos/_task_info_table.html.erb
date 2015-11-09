@@ -19,15 +19,15 @@
   <tbody>
     <% task_infos.each do |task_info| %>
       <tr>
-        <td><%= task_info.title %></td>
-		<td><%= task_info.detail %></td>
+        <td width="25%"><%= task_info.title %></td>
+		<td width="40%"><%= task_info.detail %></td>
 		<% task_status = TaskStatus.find_by(:id => task_info.task_status_id) %>
-		<td id='show_task_status'><%= task_status != nil ? task_status.name_jp : "" %></td>
+		<td width="10%", id='show_task_status'><%= task_status != nil ? task_status.name_jp : "" %></td>
 		<% task_time = task_info.estimate_task_time_type %>
-		<td><%= task_time != nil ? task_time.name_jp : "" %></th>
-        <td><%= link_to 'Show', task_info %></td>
-        <td><%= link_to 'Edit', edit_task_info_path(task_info) %></td>
-        <td><%= link_to 'Destroy', task_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<td width="10%"><%= task_time != nil ? task_time.name_jp : "" %></th>
+        <td width="5%"><%= link_to 'Show', task_info %></td>
+        <td width="5%"><%= link_to 'Edit', edit_task_info_path(task_info) %></td>
+        <td width="5%"><%= link_to 'Destroy', task_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
