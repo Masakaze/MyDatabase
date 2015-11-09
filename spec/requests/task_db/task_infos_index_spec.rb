@@ -9,6 +9,7 @@ describe "IndexPage" do
     # タイトルがshowpageへのリンクになっている
     link_to_show_page_id = "title_link"
     first("div#title_div").click_on first("a##{link_to_show_page_id}").text
+    expect(find("#page_file_name").value).to eq "show.html.erb" # showページのURLを確認する方法がなかったのでhidden_field_tagを使用した苦肉の索
   end
 
   it "IndexPage view_status_select" , js: true do
