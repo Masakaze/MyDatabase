@@ -52,7 +52,7 @@
 <!-- 作業メモ表示 -->
 <% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
 <% task_info_logs.each do |task_info_log| %>
-	<% row = (task_info_log.content.length*1.5 / task_info_log_width).to_i + 4 # 少し余計にバッファとっておく %>
+	<% row = (task_info_log.content.length*1.5 / task_info_log_width).to_i + (task_info_log.content.lines.size) + 2 # 少し余計にバッファとっておく %>
 	<%
 	   text = task_info_log.content
 	%>
