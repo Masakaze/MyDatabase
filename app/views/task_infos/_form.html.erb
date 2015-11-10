@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :title, "タイトル" %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, :maxlength => 100 %>
   </div>
   <div class="field">
     <%= f.label :detail, "詳細" %><br>
-    <%= f.text_field :detail %>
+    <%= f.text_area :detail, :size => "120x4", :maxlength => 200 %>
   </div>
   <div class="field">
 	<% # @fixme selectの第１引数をtask_infosにするなら第２引数は実際にあるaccessorでないとだめらしい %>
