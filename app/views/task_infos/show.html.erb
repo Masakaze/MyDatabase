@@ -53,7 +53,11 @@
 <% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
 <% task_info_logs.each do |task_info_log| %>
 	<% row = (task_info_log.content.length*1.5 / task_info_log_width).to_i + 4 # 少し余計にバッファとっておく %>
-	<%= text_area_tag task_info_log, "#{task_info_log.content}\n\n作成:#{task_info_log.created_at} 更新:#{task_info_log.updated_at}", { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
+	<%
+	   text = task_info_log.content
+	%>
+	<%= text_area_tag task_info_log, text, { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
+	<div style='color:#777777'>作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div><br>
 <% end %>
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |
