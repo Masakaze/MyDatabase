@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108020543) do
+ActiveRecord::Schema.define(version: 20151111142103) do
 
   create_table "game_actions", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -91,6 +91,12 @@ ActiveRecord::Schema.define(version: 20151108020543) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "task_categories", force: :cascade do |t|
+    t.string   "name_jp",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "task_info_logs", force: :cascade do |t|
     t.string   "content",      limit: 255
     t.integer  "task_info_id", limit: 4
@@ -107,8 +113,10 @@ ActiveRecord::Schema.define(version: 20151108020543) do
     t.datetime "updated_at",                             null: false
     t.integer  "estimate_task_time_type_id", limit: 4
     t.integer  "task_status_id",             limit: 4
+    t.integer  "task_category_id",           limit: 4
   end
 
+  add_index "task_infos", ["task_category_id"], name: "fk_rails_39ed1f35e9", using: :btree
   add_index "task_infos", ["task_status_id"], name: "fk_rails_75d480a9ee", using: :btree
 
   create_table "task_statuses", force: :cascade do |t|
@@ -130,5 +138,6 @@ ActiveRecord::Schema.define(version: 20151108020543) do
   add_foreign_key "game_keys", "game_actions"
   add_foreign_key "game_keys", "game_key_types"
   add_foreign_key "task_info_logs", "task_infos"
+  add_foreign_key "task_infos", "task_categories"
   add_foreign_key "task_infos", "task_statuses"
 end
