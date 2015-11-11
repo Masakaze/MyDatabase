@@ -5,6 +5,12 @@
 
 module SeedsHelperTaskDB
 
+  def self.try_add_new_record(model_inst, inst_name)
+    abort("#{model_inst.class.to_s}:(#{inst_name})の初期化に失敗\n#{model_inst.errors.messages}") if model_inst.save == false
+    puts "#{model_inst.class.to_s}:(#{inst_name})を追加"
+    return true
+  end
+
   def self.execute
     # TaskTimeType
     init_task_time_type = [
@@ -16,8 +22,7 @@ module SeedsHelperTaskDB
     init_task_time_type.each { |info|
       task_time_type = TaskTimeType.find_or_create_by(info)
       if task_time_type.new_record?
-        abort("TaskTimeType(#{info[:name_jp]})の初期化に失敗\n#{task_time_type.errors.messages}") if task_time_type.save == false
-        puts "TaskTimeType(#{task_time_type.name_jp})を追加"
+        try_add_new_record(task_time_type, task_time_type.name_jp)
       end
     }
 
@@ -30,8 +35,18 @@ module SeedsHelperTaskDB
     init_task_status.each { |info|
       task_status = TaskStatus.find_or_create_by(info)
       if task_status.new_record?
-        abort("TaskStatus:(#{task_status.name_jp})の追加に失敗\n#{task_status.errors.messages}") if task_status.save == false
-        puts "TaskStatus:(#{task_status.name_jp})追加"
+        try_add_new_record(task_status, task_status.name_jp)
+      end
+    }
+
+    # TaskCategory
+    init_task_category = [
+                          {:name_jp => "タスクDB"},
+                         ]
+    init_task_category.each { |info|
+      task_category = TaskCategory.find_or_create_by(info)
+      if task_category.new_record?
+        try_add_new_record(task_category, task_category.name_jp)
       end
     }
 
