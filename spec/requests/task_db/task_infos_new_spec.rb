@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "NewPage" do
 
   estimate_time_select_id = "estimate_time_select"
+  category_select_id = "task_category_select"
   create_button = "Create Task info"
 
   it "NewPage have" do
@@ -10,6 +11,9 @@ describe "NewPage" do
 
     # 見積もり時間のselectタグが存在
     expect(find("select##{estimate_time_select_id}")).not_to eq nil
+
+    # カテゴリ選択のselectタグが存在
+    expect(find("select##{category_select_id}")).not_to eq nil
   end
 
   it "Correct Info" do
