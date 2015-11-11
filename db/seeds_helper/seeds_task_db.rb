@@ -43,6 +43,9 @@ module SeedsHelperTaskDB
     init_task_category = [
                           {:name_jp => "タスクDB"},
                          ]
+    if Rails.env.development? || Rails.env.test?
+      init_task_category << {:name_jp => "テストデータ用カテゴリ"}
+    end
     init_task_category.each { |info|
       task_category = TaskCategory.find_or_create_by(info)
       if task_category.new_record?
