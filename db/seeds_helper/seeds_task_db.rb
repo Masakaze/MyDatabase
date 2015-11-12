@@ -41,6 +41,7 @@ module SeedsHelperTaskDB
 
     # TaskCategory
     init_task_category = [
+                          {:name_jp => "未定"},
                           {:name_jp => "タスクDB"},
                          ]
     if Rails.env.development? || Rails.env.test?

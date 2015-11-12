@@ -37,4 +37,8 @@ describe "IndexPage" do
     }
   end
 
+  it "IndexPage select by category" do
+
+  end
+
 end

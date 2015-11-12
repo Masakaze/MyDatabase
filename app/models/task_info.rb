@@ -9,5 +9,6 @@ class TaskInfo < ActiveRecord::Base
 
   def before_save_callback
     self.task_status_id = TaskStatus.task_status_not_started.id if self.task_status_id == nil
+    self.task_category_id = TaskCategory.task_category_undefined.id if self.task_category_id == nil
   end
 end
