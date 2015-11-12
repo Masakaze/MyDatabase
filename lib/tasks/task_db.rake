@@ -22,7 +22,7 @@ namespace :db do
       }
       
       if Rails.env.development?
-        info[:task_category_id] = TaskCategory.task_category_undefined.id
+        info[:task_category_id] = TaskCategory.task_category_test.id
       else
         info[:task_category_id] = (n % task_category_num) + 1
       end
