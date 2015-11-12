@@ -11,6 +11,12 @@ class TaskInfosController < ApplicationController
     else
       @task_infos = TaskInfo.includes(:task_status).where("task_status_id in (#{TaskStatus.find_by(:name_jp => @view_status_name).id})")
     end
+
+    @view_category_name = params[:view_category_name]
+    view_category = TaskCategory.find_by(:name_jp => @view_category_name)
+    if view_category != nil
+      @task_infos = @task_infos.where(:task_category_id => view_category.id)
+    end
   end
 
   # GET /task_infos/1

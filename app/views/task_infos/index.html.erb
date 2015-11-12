@@ -2,25 +2,47 @@
 
 <h1>Listing Task Infos</h1>
 
-<p>進捗状況で絞り込み</p>
-<!-- 絞り込みオプションが選択されたらリロード -->
+<!-- javascript -->
 <script type="text/javascript">
 <!--
-function reload_index_page(){
-	window.location.href = "<%= task_infos_path %>?view_status_name=" + $("#view_status_select").val();
+// 絞り込みオプションが選択されたらリロード[TaskStatus]
+function reload_page_by_status(){
+	window.location.href = "<%= task_infos_path %>?view_status_name=" + $("#view_status_select").val() + "&view_category_name=<%= @view_category_name %>";
+}
+
+// 絞り込みオプションが選択されたらリロード[TaskCategory]
+function reload_page_by_category(){
+	window.location.href = "<%= task_infos_path %>?view_status_name=<%= @view_status_name %>&view_category_name=" + $("#view_category_select").val();
 }
 -->
 </script>
-<%= select "", "", TaskStatus.all.map { |c| ["#{c.name_jp}のみ表示", c.name_jp] }, {:include_blank => true, :selected => @view_status_name}, {:onchange => "reload_index_page()", :id => "view_status_select"} %>
 
-<% TaskStatus.all.each do |task_status| %>
-	<%
-		task_infos_partial = @task_infos.where(:task_status_id => task_status.id)
-		next if task_infos_partial.blank?
-	%>
-	<br>
-	<%= render partial: 'task_info_table', locals: {task_infos: task_infos_partial, table_caption: task_status.name_jp} %>
-	<br>
+<p>進捗状況で絞り込み
+<%= select "", "", TaskStatus.all.map { |c| ["#{c.name_jp}のみ表示", c.name_jp] }, {:include_blank => true, :selected => @view_status_name}, {:onchange => "reload_page_by_status()", :id => "view_status_select"} %>
+</p>
+
+<p>カテゴリで絞り込み
+<%= select "", "", TaskCategory.all.map { |c| ["#{c.name_jp}", c.name_jp] }, {:include_blank => true, :selected => @view_category_name}, {:onchange => "reload_page_by_category()", :id => "view_category_select"} %>
+</p>
+
+<%
+	task_category = TaskCategory.find_by(:name_jp => @view_category_name)
+	task_categories = task_category == nil ? TaskCategory.all : [task_category]
+
+	task_status = TaskStatus.find_by(:name_jp => @view_status_name)
+	task_statuses = task_status == nil ? TaskStatus.all : [task_status]
+%>
+<% task_categories.each do |task_category| %>
+	<h2 id="task_category_name"><%= task_category.name_jp %></h2>
+	<% task_statuses.each do |task_status| %>
+		<%
+			task_infos_partial = @task_infos.where(:task_status_id => task_status.id).where(:task_category_id => task_category.id)
+			next if task_infos_partial.blank?
+		%>
+		<br>
+		<%= render partial: 'task_info_table', locals: {task_infos: task_infos_partial, table_caption: task_status.name_jp} %>
+		<br>
+	<% end %>
 <% end %>
 
 <br>

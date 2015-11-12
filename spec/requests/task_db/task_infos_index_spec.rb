@@ -1,5 +1,10 @@
 
 describe "IndexPage" do
+
+  view_status_select_id = "view_status_select"
+  view_category_select_id = "view_category_select"
+  category_name_id = "task_category_name"
+
   it "IndexPage have" do
     visit task_infos_path
 
@@ -15,7 +20,6 @@ describe "IndexPage" do
   it "IndexPage view_status_select" , js: true do
     visit task_infos_path
 
-    view_status_select_id = "view_status_select"
     view_status_selects = [["", ""]] + TaskStatus.all.map{ |s| [s.name_jp, "#{s.name_jp}のみ表示"] }
     view_status_selects.each { |view_status_select|
       select view_status_select[1], from: view_status_select_id
@@ -37,8 +41,21 @@ describe "IndexPage" do
     }
   end
 
-  it "IndexPage select by category" do
+  it "IndexPage select by category" , js: true do
+    visit task_infos_path
 
+    # カテゴリ表示のタグがある(ひとまずダミーデータ用)
+    expect(find("##{category_name_id}[text='#{TaskCategory.task_category_test.name_jp}']")).not_to eq nil
+
+    # selectタグがある
+    expect(find("select##{view_category_select_id}")).not_to eq nil
+
+    # 「ダミー」カテゴリを選択したら未定カテゴリのタスクは存在しない
+    select_category_name = TaskCategory.task_category_test.name_jp
+    select select_category_name, from: view_category_select_id
+    jquery_id = "##{view_category_select_id}"
+    page.evaluate_script("$('#{jquery_id}').trigger('change')") # onchangeはselectの値を設定しただけでは発生しないのでchangeをtriggerする
+    expect(find("##{category_name_id}[text='#{TaskCategory.task_category_undefined.name_jp}']")).to eq nil
   end
 
 end
