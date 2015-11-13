@@ -5,6 +5,7 @@ describe "NewPage" do
   estimate_time_select_id = "estimate_time_select"
   category_select_id = "task_category_select"
   create_button = "Create Task info"
+  add_task_category_button_id = "add_task_category_button"
 
   it "NewPage have" do
     visit new_task_info_path
@@ -14,6 +15,9 @@ describe "NewPage" do
 
     # カテゴリ選択のselectタグが存在
     expect(find("select##{category_select_id}")).not_to eq nil
+
+    # 新規タスクカテゴリ追加ボタン
+    expect(find("input##{add_task_category_button_id}")).not_to eq nil
   end
 
   it "Correct Info" do
