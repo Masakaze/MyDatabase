@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe "TaskCategory new page" do
 
+  task_category_name_jp_id = "task_category_name_jp"
+  add_category_button_name = 'カテゴリー追加'
+
   it "TaskCategory new page have" do
     visit new_task_category_path
 
@@ -9,7 +12,7 @@ describe "TaskCategory new page" do
     expect( find("input##{task_category_name_jp_id}") ).not_to eq nil
 
     # 追加ボタンがある
-    expect( find_button 'カテゴリ追加' ).not_to eq nil
+    expect( find_button add_category_button_name ).not_to eq nil
   end
 
   it "Add TaskCategory" do
