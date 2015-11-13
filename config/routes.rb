@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   end
   # TaskInfoLogs
   post 'task_info_logs', to: 'task_info_logs#create'
+  # TaskCategory
+  resources :task_categories, :only => [:new, :create]
 
   #
   resources :game_genres
