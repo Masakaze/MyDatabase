@@ -5,6 +5,7 @@ describe "TaskCategory" do
     info = { :name_jp => "テストカテゴリー" }
     task_category = TaskCategory.new(info)
     expect( task_category.valid? ).to eq true
+    task_category.save
 
     # name_jpがunique
     task_category = TaskCategory.new(info)

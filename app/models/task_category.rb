@@ -1,5 +1,7 @@
 class TaskCategory < ActiveRecord::Base
 
+  validates :name_jp, :uniqueness => true
+
   has_many :task_infos
 
   def self.task_category_undefined
