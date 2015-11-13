@@ -1,6 +1,6 @@
 class TaskCategory < ActiveRecord::Base
 
-  validates :name_jp, :uniqueness => true
+  validates :name_jp, :uniqueness => true, :presence => true
 
   has_many :task_infos
 
