@@ -30,7 +30,7 @@ function reload_page_by_category(){
 	task_categories = task_category == nil ? TaskCategory.all : [task_category]
 
 	task_status = TaskStatus.find_by(:name_jp => @view_status_name)
-	task_statuses = task_status == nil ? TaskStatus.all : [task_status]
+	task_statuses = task_status == nil ? TaskStatus.all.order("view_priority DESC") : [task_status]
 %>
 <% task_categories.each do |task_category| %>
 	<h2 id="task_category_name"><%= task_category.name_jp %></h2>
