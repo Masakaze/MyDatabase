@@ -22,7 +22,7 @@ describe "ShowPage" do
   it "Task status change to next" do
     task_info.task_status = TaskStatus.find_by(:name_jp => "未着手")
     visit task_info_path(task_info)
-    next_status = TaskStatus.find(task_info.task_status.task_status_flow.next_id)
+    next_status = task_info.task_status.next_task_status
     click_button "#{next_status.name_jp}に変更する"
     expect(TaskInfo.find(task_info.id).task_status_id).to eq next_status.id
   end
@@ -31,7 +31,7 @@ describe "ShowPage" do
   it "Task status change to prev" do
     task_info.task_status = TaskStatus.find_by(:name_jp => "完了")
     visit task_info_path(task_info)
-    prev_status = TaskStatus.find(task_info.task_status.task_status_flow.prev_id)
+    prev_status = task_info.task_status.prev_task_status
     click_button "#{prev_status.name_jp}に変更する"
     expect(TaskInfo.find(task_info.id).task_status_id).to eq prev_status.id
   end

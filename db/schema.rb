@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114053421) do
+ActiveRecord::Schema.define(version: 20151114134009) do
 
   create_table "game_actions", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -119,23 +119,18 @@ ActiveRecord::Schema.define(version: 20151114053421) do
   add_index "task_infos", ["task_category_id"], name: "fk_rails_39ed1f35e9", using: :btree
   add_index "task_infos", ["task_status_id"], name: "fk_rails_75d480a9ee", using: :btree
 
-  create_table "task_status_flows", force: :cascade do |t|
-    t.integer  "next_id",    limit: 4
-    t.integer  "prev_id",    limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "task_status_flows", ["next_id"], name: "fk_rails_95ce499faa", using: :btree
-  add_index "task_status_flows", ["prev_id"], name: "fk_rails_7218ec3428", using: :btree
-
   create_table "task_statuses", force: :cascade do |t|
     t.string   "name_jp",             limit: 255
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.integer  "view_priority",       limit: 4
     t.integer  "task_status_flow_id", limit: 4
+    t.integer  "next_task_status_id", limit: 4
+    t.integer  "prev_task_status_id", limit: 4
   end
+
+  add_index "task_statuses", ["next_task_status_id"], name: "fk_rails_b5748c3c54", using: :btree
+  add_index "task_statuses", ["prev_task_status_id"], name: "fk_rails_10680c08ee", using: :btree
 
   create_table "task_time_types", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -152,6 +147,6 @@ ActiveRecord::Schema.define(version: 20151114053421) do
   add_foreign_key "task_info_logs", "task_infos"
   add_foreign_key "task_infos", "task_categories"
   add_foreign_key "task_infos", "task_statuses"
-  add_foreign_key "task_status_flows", "task_statuses", column: "next_id"
-  add_foreign_key "task_status_flows", "task_statuses", column: "prev_id"
+  add_foreign_key "task_statuses", "task_statuses", column: "next_task_status_id"
+  add_foreign_key "task_statuses", "task_statuses", column: "prev_task_status_id"
 end
