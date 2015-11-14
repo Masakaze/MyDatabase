@@ -1,0 +1,17 @@
+/**
+ * 別windowからTaskCategoryのnewページを呼び出したときのカテゴリ追加ボタンでrenderされる
+ */
+
+if( <%= @is_success %> == false ){
+	alert("新規カテゴリ(<%= @task_category.name_jp %>追加失敗\nエラー:\n<%= @task_category.errors.messages %>");
+	window.close();
+}else{
+
+	// 呼び出し元のselectタグに新規カテゴリー追加
+	var category_select_tag = window.opener.$("#task_category_select");
+	category_select_tag.append( $("<option></option>", { value: "<= @task_category.id %>", html: "<%= @task_category.name_jp %>"}) );
+
+	alert("新規カテゴリ(<%= @task_category.name_jp %>)を追加しました");
+
+	window.close();
+}

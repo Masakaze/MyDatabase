@@ -25,7 +25,7 @@
   </div>
   <div class="field">
 	<%= select "task_info", "task_category_id", TaskCategory.all().map{ |c| [c.name_jp, c.id] }, {:include_blank => true}, {:id => "task_category_select"} %>
-	<%= button_tag type: 'button', onclick: "window.open('#{new_task_category_path}', 'カテゴリー追加', 'width=500,height=400')" do %>
+	<%= button_tag type: 'button', onclick: "window.open('#{new_task_category_path}?is_open_from_other=true', 'カテゴリー追加', 'width=500,height=400')" do %>
 		<%= "カテゴリー追加" %>
 	<% end %>
   </div>

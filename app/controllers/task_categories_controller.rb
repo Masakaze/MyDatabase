@@ -1,7 +1,7 @@
 class TaskCategoriesController < ApplicationController
 
   # GET /task_category/new
-  def new
+  def new    
     @task_category = TaskCategory.new
     @is_open_from_other = params[:is_open_from_other]
   end
@@ -9,9 +9,11 @@ class TaskCategoriesController < ApplicationController
   # POST /task_category/
   def create
     @task_category = TaskCategory.new(task_category_params)
-    msg = @task_category.save ? "Task category was successfully added" : "Add task category failed"
+    @is_success = @task_category.save
+    msg =  @is_success ? "Task category was successfully added" : "Add task category failed"
     respond_to do |format|
       format.html { redirect_to task_infos_path, :notice => msg }
+      format.js { render 'create' }
     end
   end
 
