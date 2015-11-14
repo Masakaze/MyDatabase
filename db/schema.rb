@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111142103) do
+ActiveRecord::Schema.define(version: 20151114052342) do
 
   create_table "game_actions", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -120,9 +120,10 @@ ActiveRecord::Schema.define(version: 20151111142103) do
   add_index "task_infos", ["task_status_id"], name: "fk_rails_75d480a9ee", using: :btree
 
   create_table "task_statuses", force: :cascade do |t|
-    t.string   "name_jp",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name_jp",       limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "view_priority", limit: 4
   end
 
   create_table "task_time_types", force: :cascade do |t|

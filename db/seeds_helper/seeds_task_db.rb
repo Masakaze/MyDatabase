@@ -5,9 +5,9 @@
 
 module SeedsHelperTaskDB
 
-  def self.try_add_new_record(model_inst, inst_name)
+  def self.try_save_changed_record(model_inst, inst_name)
     abort("#{model_inst.class.to_s}:(#{inst_name})の初期化に失敗\n#{model_inst.errors.messages}") if model_inst.save == false
-    puts "#{model_inst.class.to_s}:(#{inst_name})を追加"
+    puts "#{model_inst.class.to_s}:(#{inst_name})を更新"
     return true
   end
 
@@ -22,20 +22,21 @@ module SeedsHelperTaskDB
     init_task_time_type.each { |info|
       task_time_type = TaskTimeType.find_or_create_by(info)
       if task_time_type.new_record?
-        try_add_new_record(task_time_type, task_time_type.name_jp)
+        try_save_changed_record(task_time_type, task_time_type.name_jp)
       end
     }
 
     # TaskStatus
     init_task_status = [
-                        {:name_jp => "未着手"},
-                        {:name_jp => "作業中"},
-                        {:name_jp => "完了"},
+                        {:name_jp => "未着手", :view_priority => 100},
+                        {:name_jp => "作業中", :view_priority => 200},
+                        {:name_jp => "完了", :view_priority => 0},
                         ]
     init_task_status.each { |info|
-      task_status = TaskStatus.find_or_create_by(info)
-      if task_status.new_record?
-        try_add_new_record(task_status, task_status.name_jp)
+      task_status = TaskStatus.find_or_create_by(:name_jp => info[:name_jp])
+      task_status.update_attributes(info)
+      if task_status.changed?
+        try_save_changed_record(task_status, task_status.name_jp)
       end
     }
 
@@ -50,7 +51,7 @@ module SeedsHelperTaskDB
     init_task_category.each { |info|
       task_category = TaskCategory.find_or_create_by(info)
       if task_category.new_record?
-        try_add_new_record(task_category, task_category.name_jp)
+        try_save_changed_record(task_category, task_category.name_jp)
       end
     }
 
