@@ -36,6 +36,17 @@
 <% end %>
 <% end %>
 
+<p>
+<%
+   estimate_task_time = -1
+   estimate_task_time = @task_info.estimate_task_time_type if @task_info.estimate_task_time_type != nil
+   task_time = @task_info.calc_task_time
+   task_time_str = "#{task_time}分"
+   estimate_progress = @task_info.calc_estimate_progress
+%>
+<strong>想定進捗率:<%= "#{estimate_progress}%"  %> 経過時間:<%= task_time_str %> 見積もり時間:<%= estimate_task_time.name_jp %></strong>
+</p>
+
 <%
    task_info_log_width = 120
 %>

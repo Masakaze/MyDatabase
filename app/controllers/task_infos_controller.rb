@@ -79,6 +79,14 @@ class TaskInfosController < ApplicationController
     if @task_info.changed?
       task_info_log = TaskInfoLog.new(:content => "進捗を#{@task_info.task_status.name_jp}に変更", :task_info_id => @task_info.id)
       @task_info.task_info_logs << task_info_log
+
+      # タスク時間計測周り
+      case @task_info.task_status_id
+      when TaskStatus.task_status_start.id then
+        @task_info.task_start_time = Time.now()
+      when TaskStatus.task_status_finish.id then
+        @task_info.real_task_time = @task_info.calc_task_time
+      end
     end
     msg = @task_info.save ? "Task status changed" : "Task status change process failed"
     respond_to do |format|
