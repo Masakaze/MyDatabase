@@ -14,12 +14,17 @@ class TaskInfo < ActiveRecord::Base
 
   # タスク経過時間を計算
   def calc_task_time
-    return real_task_time if task_status_id == TaskStatus.task_status_finish.id
+    if task_status_id == TaskStatus.task_status_finish.id
+      return real_task_time == nil ? 0 : real_task_time # 仕様追加時の暫定対応
+    end
+    return 0 if task_status_id == TaskStatus.task_status_not_started.id
+    return 0 if task_start_time == nil # 仕様追加時の暫定対応
     return (Time.now() - task_start_time).to_i / 60
   end
 
   # 想定進捗率を%で計算
   def calc_estimate_progress
+    return 0 if estimate_task_time_type == nil
     return (100.0 * calc_task_time / estimate_task_time_type.value).round
   end
 end

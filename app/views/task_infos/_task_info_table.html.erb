@@ -11,7 +11,7 @@
       <th>タイトル</th>
 	  <th>詳細</th>
 	  <th>進捗</th>
-	  <th>時間</th>
+	  <th colspan="3">時間(見積もり/経過/想定進捗率)</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -24,9 +24,11 @@
 		<% task_status = TaskStatus.find_by(:id => task_info.task_status_id) %>
 		<td width="10%", id='show_task_status'><%= task_status != nil ? task_status.name_jp : "" %></td>
 		<% task_time = task_info.estimate_task_time_type %>
-		<td width="10%"><%= task_time != nil ? task_time.name_jp : "" %></th>
-        <td width="8%"><%= link_to 'Edit', edit_task_info_path(task_info) %></td>
-        <td width="7%"><%= link_to 'Destroy', task_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<td width="5%"><%= task_time != nil ? task_time.name_jp : "" %></td>
+		<td width="5%"><%= task_time != nil ? "#{task_info.calc_task_time}分" : "" %></td>
+		<td width="5%"><%= task_time != nil ? "#{task_info.calc_estimate_progress}%" : "" %></td>
+        <td width="5%"><%= link_to 'Edit', edit_task_info_path(task_info) %></td>
+        <td width="5%"><%= link_to 'Destroy', task_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
