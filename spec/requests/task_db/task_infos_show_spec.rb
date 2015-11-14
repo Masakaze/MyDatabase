@@ -3,8 +3,6 @@ require 'spec_helper'
 describe "ShowPage" do
   info = {:title => "ダミータイトル", :detail => "ダミー詳細"}
   task_info = TaskInfo.create(info)
-  task_start_button = "タスク開始"
-  task_finish_button = "タスク完了"
   task_finish_button_id = "task_finish_button"
   create_task_info_log_button = "作業メモ追加"
   create_task_info_log_button_id = "create_task_info_log_button"
@@ -15,16 +13,27 @@ describe "ShowPage" do
 
     expect(page).to have_content info[:title]
     expect(page).to have_content info[:detail]
-    expect(find("input##{task_finish_button_id}")).not_to eq nil
+#    expect(find("input##{task_finish_button_id}")).not_to eq nil
     expect(find("##{create_task_info_log_button_id}")).not_to eq nil
     #expect(find("##{show_task_info_log_id}")).to eq nil # 存在しないことを検証したかったけどelementが見つからない時点でエラーがでてしまった
   end
 
-  # タスク開始
-  it "Task start" do
+  # タスクのステータスを次の状態へ
+  it "Task status change to next" do
+    task_info.task_status = TaskStatus.find_by(:name_jp => "未着手")
     visit task_info_path(task_info)
-    click_button task_start_button
-    expect(TaskInfo.find(task_info.id).task_status_id).to eq TaskStatus.task_status_start.id
+    next_status = TaskStatus.find(task_info.task_status.task_status_flow.next_id)
+    click_button "#{next_status.name_jp}に変更する"
+    expect(TaskInfo.find(task_info.id).task_status_id).to eq next_status.id
+  end
+
+  # タスクのステータスを前の状態へ
+  it "Task status change to prev" do
+    task_info.task_status = TaskStatus.find_by(:name_jp => "完了")
+    visit task_info_path(task_info)
+    prev_status = TaskStatus.find(task_info.task_status.task_status_flow.prev_id)
+    click_button "#{prev_status.name_jp}に変更する"
+    expect(TaskInfo.find(task_info.id).task_status_id).to eq prev_status.id
   end
 
   # 作業メモを書いた
@@ -38,10 +47,4 @@ describe "ShowPage" do
     expect(find("##{show_task_info_log_id}")).not_to eq nil
   end
 
-  # タスク完了
-  it "Task finish" do
-    visit task_info_path(task_info)
-    click_button task_finish_button
-    expect(TaskInfo.find(task_info.id).task_status_id).to eq TaskStatus.task_status_finish.id
-  end
 end

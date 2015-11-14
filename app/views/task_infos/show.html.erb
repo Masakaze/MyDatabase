@@ -10,23 +10,30 @@
   <%= @task_info.detail %><br>
 </p>
 
+<!-- 進捗変更ボタン -->
 <% task_status_change_url = "task_status_change" %>
-<!-- タスク開始ボタン -->
+<!-- 前のステータスに変更 -->
+<% if @task_info.task_status.task_status_flow.prev_id != nil %>
+<% prev_status = TaskStatus.find(@task_info.task_status.task_status_flow.prev_id) %>
 <%= form_tag(task_status_change_url, :method => 'get') do %>
 	<div class="actions">
-	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_start_button_task_id" } -%>
-	  <%= hidden_field_tag :task_status_id, TaskStatus.task_status_start.id %>
-	  <%= submit_tag "タスク開始", { :id => "task_start_button" } %>
+	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_status_change_prev" } -%>
+	  <%= hidden_field_tag :task_status_id, prev_status.id %>
+	  <%= submit_tag "#{prev_status.name_jp}に変更する", { :id => "task_status_change_prev_button" } %>
 	</div>
 <% end %>
+<% end %>
 
-<!-- タスク完了ボタン -->
+<!-- 次のステータスに変更 -->
+<% if @task_info.task_status.task_status_flow.next_id != nil %>
+<% next_status = TaskStatus.find(@task_info.task_status.task_status_flow.next_id) %>
 <%= form_tag(task_status_change_url, :method => 'get') do %>
 	<div class="actions">
-	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_finish_button_task_id" } -%>
-	  <%= hidden_field_tag :task_status_id, TaskStatus.task_status_finish.id %>
-	  <%= submit_tag "タスク完了", { :id => "task_finish_button" } %>
+	  <%= hidden_field_tag :id, @task_info.id, { :id => "task_status_change_next" } -%>
+	  <%= hidden_field_tag :task_status_id, next_status.id %>
+	  <%= submit_tag "#{next_status.name_jp}に変更する", { :id => "task_status_change_next_button" } %>
 	</div>
+<% end %>
 <% end %>
 
 <%
