@@ -2,6 +2,8 @@ class TaskStatus < ActiveRecord::Base
 
   validates :name_jp, :uniqueness => true
 
+  belongs_to :task_status_flow
+
   def self.task_status_not_started
     TaskStatus.find_by(:name_jp => "未着手")
   end

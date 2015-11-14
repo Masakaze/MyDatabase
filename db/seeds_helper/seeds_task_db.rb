@@ -26,15 +26,38 @@ module SeedsHelperTaskDB
       end
     }
 
-    # TaskStatus
+    # TaskStatus / TaskStatusFlow
     init_task_status = [
-                        {:name_jp => "未着手", :view_priority => 100},
-                        {:name_jp => "作業中", :view_priority => 200},
-                        {:name_jp => "完了", :view_priority => 0},
+                        {
+                          :task_status => {:name_jp => "未着手", :view_priority => 100}, 
+                          :task_status_flow => {:next_task_status => "作業中", :prev_task_status => nil}
+                        },
+                        {
+                          :task_status => {:name_jp => "作業中", :view_priority => 200},
+                          :task_status_flow => {:next_task_status => "完了", :prev_task_status => "未着手"}
+                        },
+                        {
+                          :task_status => {:name_jp => "完了", :view_priority => 0},
+                          :task_status_flow => {:next_task_status => nil, :prev_task_status => "作業中"}
+                        }
                         ]
     init_task_status.each { |info|
-      task_status = TaskStatus.find_or_create_by(:name_jp => info[:name_jp])
-      task_status.update_attributes(info)
+      task_status = TaskStatus.find_or_create_by(:name_jp => info[:task_status][:name_jp])
+      task_status.update_attributes(info[:task_status])
+
+      task_status_flow = nil
+      if task_status.task_status_flow_id == nil
+        task_status_flow = TaskStatusFlow.create
+        task_status.task_status_flow = task_status_flow
+      else
+        task_status_flow = task_status.task_status_flow
+      end
+      task_status_flow_info = {:next_id => nil, :prev_id => nil}
+      task_status_flow_info[:next_id] = TaskStatus.find_by(:name_jp => info[:task_status_flow][:next_task_status]).id if info[:task_status_flow][:next_task_status] != nil
+      task_status_flow_info[:prev_id] = TaskStatus.find_by(:name_jp => info[:task_status_flow][:prev_task_status]).id if info[:task_status_flow][:prev_task_status] != nil
+
+      task_status_flow.update_attributes(task_status_flow_info)
+
       if task_status.changed?
         try_save_changed_record(task_status, task_status.name_jp)
       end
