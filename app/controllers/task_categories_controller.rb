@@ -3,6 +3,7 @@ class TaskCategoriesController < ApplicationController
   # GET /task_category/new
   def new
     @task_category = TaskCategory.new
+    @is_open_from_other = params[:is_open_from_other]
   end
 
   # POST /task_category/
