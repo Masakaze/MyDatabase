@@ -1,6 +1,6 @@
 class TaskStatus < ActiveRecord::Base
 
-  validates :name_jp, :uniqueness => true
+  validates :name_jp, :uniqueness => true, :presence => true
 
   belongs_to :task_status_flow
 
