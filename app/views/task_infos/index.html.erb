@@ -25,6 +25,33 @@ function reload_page_by_category(){
 <%= select "", "", TaskCategory.all.map { |c| ["#{c.name_jp}", c.name_jp] }, {:include_blank => true, :selected => @view_category_name}, {:onchange => "reload_page_by_category()", :id => "view_category_select"} %>
 </p>
 
+<!-- 
+タイトル内容を検索してリストをリアルタイム表示
+アルファベットはリアルタイムに絞り込めるけど
+@fixme 全部の要素入れるで処理重そう
+-->
+<input type="search" name="name" autocomplete="on" list="title_search_list" id="title_search">
+<datalist id="title_search_list">
+<% TaskInfo.all.each do |task_info| %>
+	<option value="<%= task_info.title %>"><%= task_info_url(task_info) %></option>
+<% end %>
+</datalist>
+<script type="text/javascript">
+<!--
+	$('#title_search').on('input', function(){
+		var options = $('datalist#title_search_list')[0].options
+		for( var i=0; i<options.length; i++){ 
+			if( options[i].value == $(this).val() ){
+				window.location.href = options[i].innerHTML;
+			}
+		}
+	});
+-->
+</script>
+<p>
+
+</p>
+
 <%
 	task_category = TaskCategory.find_by(:name_jp => @view_category_name)
 	task_categories = task_category == nil ? TaskCategory.all : [task_category]
