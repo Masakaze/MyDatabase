@@ -14,7 +14,7 @@ class TaskInfo < ActiveRecord::Base
 
   # タスク経過時間を計算
   def calc_task_time
-    if task_status_id == TaskStatus.task_status_finish.id && real_task_time != nil
+    if task_status_id == TaskStatus.task_status_finish.id && real_task_time != nil && real_task_time != 0
       return real_task_time
     end
     return 0 if task_status_id == TaskStatus.task_status_not_started.id

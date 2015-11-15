@@ -17,6 +17,11 @@ class TaskInfosController < ApplicationController
     if view_category != nil
       @task_infos = @task_infos.where(:task_category_id => view_category.id)
     end
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @task_infos }
+    end
   end
 
   # GET /task_infos/1
