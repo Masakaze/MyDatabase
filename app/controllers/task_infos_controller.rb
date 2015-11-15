@@ -27,6 +27,10 @@ class TaskInfosController < ApplicationController
   # GET /task_infos/1
   # GET /task_infos/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @task_info }
+    end
   end
 
   # GET /task_infos/new
