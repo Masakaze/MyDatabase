@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117141716) do
+ActiveRecord::Schema.define(version: 20151117151004) do
 
   create_table "actor_base_infos", force: :cascade do |t|
     t.integer  "relation_actor_base_id", limit: 4
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20151117141716) do
   create_table "actor_bases", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "actor_holders", force: :cascade do |t|
+    t.integer  "actor_base_id", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "game_actions", force: :cascade do |t|
