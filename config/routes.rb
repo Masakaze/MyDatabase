@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   # TaskCategory
   resources :task_categories, :only => [:new, :create]
 
+  # TaskDB 外部登録周り
+  namespace :task_db_http_request do
+    resources :task_infos
+  end
+
   #
   resources :game_genres
   resources :game_infos do
