@@ -1,5 +1,7 @@
 class TaskDbHttpRequest::TaskInfosController < ApplicationController
 
+  protect_from_forgery with: :null_session
+
   # テスト用
   def new
 =begin
