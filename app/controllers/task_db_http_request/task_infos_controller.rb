@@ -2,10 +2,12 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
 
   # テスト用
   def new
+=begin
     task_info = TaskInfo.find_by(:task_category_id => TaskCategory.task_category_test.id)
     task_info.detail = "スクリプトからのPostテスト"
     task_info.detail = params[:detail] if params[:detail]!= nil
     task_info.save
+=end
 
     require 'yaml'
     respond_to do |format|
@@ -14,6 +16,9 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
   end
 
   def create
+    params[:id] = 11
+    params[:task_info_logs] = {}
+    params[:task_info_logs][:content] = "Test"
     task_info = TaskInfo.find(params[:id])
     abort if task_info == nil
     task_info_log = nil

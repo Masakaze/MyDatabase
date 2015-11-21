@@ -33,3 +33,7 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<%= form_tag('/task_db_http_request/task_infos', :method => :post) do %>
+<%= submit_tag "テスト " %>
+<% end %>
