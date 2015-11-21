@@ -16,9 +16,6 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
   end
 
   def create
-    params[:id] = 11
-    params[:task_info_logs] = {}
-    params[:task_info_logs][:content] = "Test"
     task_info = TaskInfo.find(params[:id])
     abort if task_info == nil
     task_info_log = nil
