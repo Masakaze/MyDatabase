@@ -19,17 +19,37 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
 
   def create
     task_info = TaskInfo.find(params[:id])
-    abort if task_info == nil
+
+    if task_info == nil
+      respond_to { |format| format.html { render :text => "failed" } }
+      return false
+    end
+
     task_info_log = nil
     if params[:task_info_logs] != nil && params[:task_info_logs][:content] != nil
-      task_info_log = TaskInfoLog.create(:content => params[:task_info_logs][:content], :task_info_id => params[:id])
+      if params[:task_info_logs][:id] == nil
+        task_info_log = TaskInfoLog.create(:task_info_id => params[:id])
+      else
+        task_info_log = TaskInfoLog.find(params[:task_info_logs][:id])
+      end
+      task_info_log.content = params[:task_info_logs][:content]
     end
-    abort if task_info_log == nil
 
-    task_info.task_info_logs << task_info_log
-    task_info.save
+    if task_info_log == nil
+      respond_to { |format| format.html { render :text => "failed" } }
+      return false
+    end
 
-    head :ok
+    if task_info_log.new_record?
+      task_info.task_info_logs << task_info_log
+      task_info.save
+    else
+      task_info_log.save
+    end
+
+    respond_to do |format|
+      format.html { render :text => "success" }
+    end
   end
 
 end

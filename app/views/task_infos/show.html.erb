@@ -74,7 +74,7 @@
 	   text = task_info_log.content
 	%>
 	<%= text_area_tag task_info_log, text, { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
-	<div style='color:#777777'>作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div><br>
+	<div style='color:#777777'>ID:<%= task_info_log.id %> 作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div><br>
 <% end %>
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |
