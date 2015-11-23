@@ -44,7 +44,8 @@ describe "ShowPage" do
     log_num = task_info.task_info_logs != nil ? task_info.task_info_logs.size : 0
     expect{ click_button create_task_info_log_button }.to change(TaskInfoLog, :count).by(1)
     expect(TaskInfo.find(task_info.id).task_info_logs.size).to eq log_num+1
-    expect(find("##{show_task_info_log_id}")).not_to eq nil
+    task_info_log_added = TaskInfoLog.last
+    expect(find("##{show_task_info_log_id}_#{task_info_log_added.id}")).not_to eq nil
   end
 
 end
