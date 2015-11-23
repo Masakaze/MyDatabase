@@ -16,6 +16,8 @@ module SeedsHelperTaskDB
     init_task_time_type = [
                            {:name_jp => "30分", :value => 30},
                            {:name_jp => "1時間", :value => 60},
+                           {:name_jp => "2時間", :value => 120},
+                           {:name_jp => "3時間", :value => 180},
                            {:name_jp => "半日", :value => 60*12},
                            {:name_jp => "1日", :value => 60*24},
                           ]
