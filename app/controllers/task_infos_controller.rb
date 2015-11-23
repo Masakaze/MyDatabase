@@ -20,7 +20,15 @@ class TaskInfosController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml { render :xml => @task_infos }
+      format.xml {
+        task_info_xmls = @task_infos.map { |c|
+          {
+            :task_info => c, 
+            :add_info => {:estimate_progress => c.calc_estimate_progress}
+          }
+        }
+        render :xml => task_info_xmls
+      }
     end
   end
 
