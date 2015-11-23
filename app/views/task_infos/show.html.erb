@@ -7,7 +7,7 @@
   <%= @task_info.title %><br>
 
   <strong>詳細:</strong><br>
-  <%= @task_info.detail %><br>
+  <%= @task_info.detail.gsub(/\r\n|\r|\n/, "<br>").html_safe %><br>
 </p>
 
 <!-- 進捗変更ボタン -->
@@ -79,3 +79,4 @@
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |
 <%= link_to 'Back', task_infos_path %>
+
