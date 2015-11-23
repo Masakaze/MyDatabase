@@ -1,0 +1,5 @@
+var text_area = $("#show_task_info_log_<%= @task_info_log_id %>");
+text_area.val("<%= @task_info_log_content_view %>");
+if( <%= @is_success %> ){
+	alert("更新");
+}

@@ -70,7 +70,7 @@
 <script type="text/javascript">
 <!--
 
-var update_form_tag = $("<form></form>").attr({"action" : "/task_info_logs", "accept-charset" : "UTF-8", "data-remote" : "true", "method" : "put"}).append($("<input></input>").attr({"type" : "submit", "name" : "commit", "value" : "更新"}));
+var update_form_tag = $("<form></form>").attr({/*"action" : "/task_info_logs", */"accept-charset" : "UTF-8", /*"data-remote" : "true",*/ "method" : "post"}).append($("<input></input>").attr({"type" : "submit", "name" : "commit", "value" : "更新"})).append($("<input></input>").attr({"type" : "hidden", "name" : "_method", "value" : "patch"}));
 var update_tag = $("<span></span>").attr({id: "update_log"}).append(update_form_tag);
 //var update_tag = $("<span></span>").attr({id: "update_log"}).append($("<a></a>").attr({"href" : "javascript:alert('aa')"}).text("更新"));
 
@@ -82,6 +82,8 @@ function showTaskInfoLogUi(log_id)
 {
 	var helper_tag = $("div#show_task_info_log_helper_" + log_id);
 	if( helper_tag.find("span#update_log")[0] == undefined ){
+		update_form_tag.attr("action", "/task_info_logs/" + log_id);
+
 		$("#update_log").remove();
 		$("#restore_log").remove();
 		helper_tag.append(update_tag).append(restore_tag);
@@ -103,8 +105,16 @@ function hideTaskInfoLogUi()
 	   show_task_info_log_ui = "showTaskInfoLogUi(#{task_info_log.id})"
 	   hide_task_info_log_ui = "hideTaskInfoLogUi()"
 	%>
-	<%= text_area_tag task_info_log, text, { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200, :onclick => show_task_info_log_ui, :onBlur => hide_task_info_log_ui } %><br>
-	<div style='color:#777777' id="show_task_info_log_helper_<%= task_info_log.id %>">ID:<%= task_info_log.id %> 作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div><br>
+	<% if false %>
+	<%= text_area_tag task_info_log, text, { :id => "show_task_info_log_#{task_info_log.id}", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200, :onclick => show_task_info_log_ui, :onBlur => hide_task_info_log_ui } %><br>
+	<% end %>
+	<%= form_for(task_info_log, {:method => 'put', :remote => 'true'}) do |f|%>
+<%= text_area_tag "task_info_log[content]", text, { :id => "show_task_info_log_#{task_info_log.id}", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
+		<%= f.submit "更新", {:id => "task_info_log_update_#{task_info_log.id}"} %>
+		<%= f.submit "戻す", {:id => "task_info_log_restore_#{task_info_log.id}"} %>
+	<% end %>
+	<div style='color:#777777' id="show_task_info_log_helper_<%= task_info_log.id %>">ID:<%= task_info_log.id %> 作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div>
+<br>
 <% end %>
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |

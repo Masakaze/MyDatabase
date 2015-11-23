@@ -1,5 +1,5 @@
 class TaskInfoLogsController < ApplicationController
-  before_action :set_task_info_log, only: []
+  before_action :set_task_info_log, only: [:update]
 
   # POST /task_info_logs
   def create
@@ -13,6 +13,20 @@ class TaskInfoLogsController < ApplicationController
         format.html { redirect_to task_info, notice: 'TaskInfoLog create faild.' }
       end
     end
+  end
+
+  # PUT /task_info_logs/1
+  def update
+    if params[:commit] == "更新"
+      @task_info_log_content_view = task_info_log_params[:content]
+      @task_info_log.content = task_info_log_params[:content]
+      @is_success = @task_info_log.save
+    else
+      @task_info_log_content_view = @task_info_log.content
+      @is_success = false
+    end
+    @task_info_log_id = params[:id]
+
   end
 
   private

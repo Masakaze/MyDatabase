@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     end
   end
   # TaskInfoLogs
-  post 'task_info_logs', to: 'task_info_logs#create'
+#  post 'task_info_logs', to: 'task_info_logs#create'
+#  put 'task_info_logs/(.:format)', to: 'task_info_logs#update'
+  resources :task_info_logs, :only => [:create, :update]
   # TaskCategory
   resources :task_categories, :only => [:new, :create]
 
