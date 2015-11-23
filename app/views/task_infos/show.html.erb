@@ -71,25 +71,27 @@
 <!--
 
 var update_form_tag = $("<form></form>").attr({"action" : "/task_info_logs", "accept-charset" : "UTF-8", "data-remote" : "true", "method" : "put"}).append($("<input></input>").attr({"type" : "submit", "name" : "commit", "value" : "更新"}));
-//var update_tag = $("<span></span>").attr({id: "update_log"}).append(update_form_tag);
-var update_tag = $("<span></span>").attr({id: "update_log"}).append($("<a></a>").attr({"href" : "javascript:alert('aa')"}).text("更新"));
+var update_tag = $("<span></span>").attr({id: "update_log"}).append(update_form_tag);
+//var update_tag = $("<span></span>").attr({id: "update_log"}).append($("<a></a>").attr({"href" : "javascript:alert('aa')"}).text("更新"));
 
 var restore_form_tag = $("<form></form>").attr({"action" : "/task_info_logs", "accept-charset" : "UTF-8", "data-remote" : "true", "method" : "put"}).append($("<input></input>").attr({"type" : "submit", "name" : "commit", "value" : "戻す"}));
-//var restore_tag = $("<span></span>").attr({id: "restore_log"}).append(restore_form_tag);
-var restore_tag = $("<span></span>").attr({id: "restore_log"}).append($("<a></a>").attr({"href" : "javascript:alert('bb')"}).text("戻す"));
+var restore_tag = $("<span></span>").attr({id: "restore_log"}).append(restore_form_tag);
+//var restore_tag = $("<span></span>").attr({id: "restore_log"}).append($("<a></a>").attr({"href" : "javascript:alert('bb')"}).text("戻す"));
 
 function showTaskInfoLogUi(log_id)
 {
-	if( $("span#update_log")[0] == undefined ){
-		var helper_tag = $("div#show_task_info_log_helper_" + log_id);
+	var helper_tag = $("div#show_task_info_log_helper_" + log_id);
+	if( helper_tag.find("span#update_log")[0] == undefined ){
+		$("#update_log").remove();
+		$("#restore_log").remove();
 		helper_tag.append(update_tag).append(restore_tag);
 	}
 }
 
 function hideTaskInfoLogUi()
 {
-	$("#update_log").remove();
-	$("#restore_log").remove();
+//	$("#update_log").remove();
+//	$("#restore_log").remove();
 }
 -->
 </script>
