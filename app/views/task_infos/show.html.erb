@@ -67,14 +67,36 @@
 <br>
 
 <!-- 作業メモ表示 -->
+<script type="text/javascript">
+<!--
+var update_tag = $("<span></span>").text("　　　　　　[更新]　").attr({id: "update_log"});
+var restore_tag = $("<span></span>").text("　[戻す]　").attr({id: "restore_log"});
+
+function showTaskInfoLogUi(log_id)
+{
+	var helper_tag = $("div#show_task_info_log_helper_" + log_id);
+	if( $("span#update_log")[0] == undefined ){
+		helper_tag.append(update_tag).append(restore_tag);
+	}
+}
+
+function hideTaskInfoLogUi()
+{
+	update_log.remove();
+	restore_log.remove();
+}
+-->
+</script>
 <% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
 <% task_info_logs.each do |task_info_log| %>
 	<% row = (task_info_log.content.length*1.5 / task_info_log_width).to_i + (task_info_log.content.lines.size) + 2 # 少し余計にバッファとっておく %>
 	<%
 	   text = task_info_log.content
+	   show_task_info_log_ui = "showTaskInfoLogUi(#{task_info_log.id})"
+	   hide_task_info_log_ui = "hideTaskInfoLogUi()"
 	%>
-	<%= text_area_tag task_info_log, text, { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200 } %><br>
-	<div style='color:#777777'>ID:<%= task_info_log.id %> 作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div><br>
+	<%= text_area_tag task_info_log, text, { :id => "show_task_info_log", :size => "#{task_info_log_width.to_s}x#{row.to_s}", :maxlength => 200, :onclick => show_task_info_log_ui, :onBlur => hide_task_info_log_ui } %><br>
+	<div style='color:#777777' id="show_task_info_log_helper_<%= task_info_log.id %>">ID:<%= task_info_log.id %> 作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div><br>
 <% end %>
 
 <%= link_to 'Edit', edit_task_info_path(@task_info) %> |
