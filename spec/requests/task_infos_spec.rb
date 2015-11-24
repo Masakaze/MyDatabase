@@ -10,6 +10,7 @@ $:.unshift(File.join( File.dirname(__FILE__), "task_db") )
 require "task_infos_show_spec"
 require "task_infos_index_spec"
 require "task_infos_new_spec"
+require "task_infos_read_reminder_spec"
 
 require "task_category_new_spec"
 

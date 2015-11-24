@@ -91,6 +91,11 @@ ActiveRecord::Schema.define(version: 20151124144656) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "infos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "task_categories", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
     t.datetime "created_at",             null: false

@@ -8,6 +8,8 @@
 
   <strong>詳細:</strong><br>
   <%= @task_info.detail.gsub(/\r\n|\r|\n/, "<br>").html_safe %><br>
+
+  <strong>リマインダ既読:</strong><%= check_box @task_info, :read_reminder, { :checked => @task_info.read_reminder, :disabled => true } %>
 </p>
 
 <!-- 進捗変更ボタン -->
