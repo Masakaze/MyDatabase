@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :task_infos do
     collection do
       get 'task_status_change'
-      get 'read_reminder'
     end
   end
   # TaskInfoLogs
@@ -15,7 +14,11 @@ Rails.application.routes.draw do
 
   # TaskDB 外部登録周り
   namespace :task_db_http_request do
-    resources :task_infos
+    resources :task_infos do
+      collection do
+        get 'read_reminder'
+      end
+    end
   end
 
   #

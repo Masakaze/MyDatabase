@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114160304) do
+ActiveRecord::Schema.define(version: 20151124144656) do
 
   create_table "game_actions", force: :cascade do |t|
     t.string   "name_jp",    limit: 255
@@ -109,13 +109,14 @@ ActiveRecord::Schema.define(version: 20151114160304) do
   create_table "task_infos", force: :cascade do |t|
     t.string   "title",                      limit: 255
     t.string   "detail",                     limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.integer  "estimate_task_time_type_id", limit: 4
     t.integer  "task_status_id",             limit: 4
     t.integer  "task_category_id",           limit: 4
     t.integer  "real_task_time",             limit: 4
     t.integer  "task_start_time",            limit: 4
+    t.boolean  "read_reminder",              limit: 1,   default: false, null: false
   end
 
   add_index "task_infos", ["task_category_id"], name: "fk_rails_39ed1f35e9", using: :btree

@@ -52,4 +52,16 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
     end
   end
 
+  # GET
+  def read_reminder
+    task_info_id = params[:task_info_id]
+    task_info = TaskInfo.find(task_info_id)
+
+    task_info.read_reminder = true
+    msg = task_info.save ? "success" : "failed"
+    respond_to do |format|
+      format.html { render :text => msg }
+    end
+  end
+
 end
