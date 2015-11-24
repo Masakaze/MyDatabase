@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :task_infos do
     collection do
       get 'task_status_change'
+      get 'read_reminder'
     end
   end
   # TaskInfoLogs
