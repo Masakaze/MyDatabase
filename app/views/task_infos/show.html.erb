@@ -61,6 +61,7 @@
 	  <%= f.text_area :content, { :id => "task_info_log_content", :size => "#{task_info_log_width.to_s}x4", :maxlength => 200 } %><br>
 	</div>
 	<div class="actions">
+	  <%= f.select :log_type, [["メモ", "text"], ["画像", "picture"]] %>
 	  <%= f.submit "作業メモ追加", { :id => "create_task_info_log_button" } %>
 	</div>
 <% end %>
@@ -101,6 +102,7 @@ function hideTaskInfoLogUi()
 </script>
 <% task_info_logs = TaskInfoLog.where(:task_info_id => @task_info.id).order("created_at DESC") %>
 <% task_info_logs.each do |task_info_log| %>
+<% if task_info_log.is_type_text %>
 	<% row = (task_info_log.content.length*1.5 / task_info_log_width).to_i + (task_info_log.content.lines.size) + 2 # 少し余計にバッファとっておく %>
 	<%
 	   text = task_info_log.content
@@ -115,6 +117,9 @@ function hideTaskInfoLogUi()
 		<%= f.submit "更新", {:id => "task_info_log_update_#{task_info_log.id}"} %>
 		<%= f.submit "戻す", {:id => "task_info_log_restore_#{task_info_log.id}"} %>
 	<% end %>
+<% else %>
+	<%= image_tag task_info_log.content %>
+<% end %>
 	<div style='color:#777777' id="show_task_info_log_helper_<%= task_info_log.id %>">ID:<%= task_info_log.id %> 作成:<%= task_info_log.created_at %> 更新:<%= task_info_log.updated_at %></div>
 <br>
 <% end %>

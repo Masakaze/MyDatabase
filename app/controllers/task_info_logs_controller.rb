@@ -3,9 +3,18 @@ class TaskInfoLogsController < ApplicationController
 
   # POST /task_info_logs
   def create
+    task_info = TaskInfo.find(task_info_log_params[:task_info_id])
+
+    if task_info_log_params[:log_type] == "picture" && 
+        ( (/^http[s]?:\/\/[\w\d\.\/]*/ =~ task_info_log_params[:content]) == nil || (/\s/ =~ task_info_log_params[:content]) != nil )
+      respond_to do |format|
+        format.html { redirect_to task_info, notice: 'Please write picture url' }
+      end
+      return false
+    end
+
     @task_info_log = TaskInfoLog.new(task_info_log_params)
 
-    task_info = TaskInfo.find(task_info_log_params[:task_info_id])
     respond_to do |format|
       if @task_info_log.save
         format.html { redirect_to task_info, notice: 'TaskInfoLog was successfully created.' }
@@ -35,6 +44,6 @@ class TaskInfoLogsController < ApplicationController
   end
 
   def task_info_log_params
-    params.require(:task_info_log).permit(:content, :task_info_id)
+    params.require(:task_info_log).permit(:content, :task_info_id, :log_type)
   end
 end
