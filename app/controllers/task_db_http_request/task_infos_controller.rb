@@ -53,6 +53,7 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
   end
 
   # GET
+  # リマインダフラグを立てる
   def read_reminder
     task_info_id = params[:task_info_id]
     task_info = TaskInfo.find(task_info_id)
@@ -61,6 +62,15 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
     msg = task_info.save ? "success" : "failed"
     respond_to do |format|
       format.html { render :text => msg }
+    end
+  end
+
+  # POST
+  # アップロードコメントをTaskDBに送信
+  def upload_comment
+    require 'yaml'
+    respond_to do |format|
+      format.html { render :text => "not implemented\n#{params.to_yaml}" }
     end
   end
 

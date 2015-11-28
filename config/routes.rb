@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :task_infos do
       collection do
         get 'read_reminder'
+        post 'upload_comment'
       end
     end
   end
