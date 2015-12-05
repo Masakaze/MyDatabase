@@ -36,13 +36,20 @@ module SeedsHelperTaskDB
                         },
                         {
                           :task_status => {:name_jp => "作業中", :view_priority => 200},
-                          :task_status_flow => {:next_task_status => "完了", :prev_task_status => "未着手"}
+                          :task_status_flow => {:next_task_status => "完了", :prev_task_status => "作業中断"}
+                        },
+                        {
+                          :task_status => {:name_jp => "作業中断", :view_priority => 300},
+                          :task_status_flow => {:next_task_status => "作業中", :prev_task_status => "未着手"}
                         },
                         {
                           :task_status => {:name_jp => "完了", :view_priority => 0},
                           :task_status_flow => {:next_task_status => nil, :prev_task_status => "作業中"}
                         }
                         ]
+    init_task_status.each { |info|
+      task_status = TaskStatus.find_or_create_by(:name_jp => info[:task_status][:name_jp])
+    }
     init_task_status.each { |info|
       task_status = TaskStatus.find_or_create_by(:name_jp => info[:task_status][:name_jp])
       task_flow_info = info[:task_status_flow]
