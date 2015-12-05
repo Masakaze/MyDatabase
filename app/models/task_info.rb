@@ -24,7 +24,9 @@ class TaskInfo < ActiveRecord::Base
     end
     return 0 if task_status_id == TaskStatus.task_status_not_started.id
     return 0 if task_start_time == nil # 仕様追加時の暫定対応
-    return (Time.now() - task_start_time).to_i / 60 + real_task_time
+    calc_val = (Time.now() - task_start_time).to_i / 60
+    calc_val += real_task_time if real_task_time != nil
+    return calc_val
   end
 
   # 想定進捗率を%で計算
