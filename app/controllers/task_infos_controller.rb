@@ -92,18 +92,22 @@ class TaskInfosController < ApplicationController
 
   # PUT /task_infos/1/task_status_change
   def task_status_change
-    @task_info.task_status_id = params[:task_status_id]
-    if @task_info.changed?
-      task_info_log = TaskInfoLog.new(:content => "進捗を#{@task_info.task_status.name_jp}に変更", :task_info_id => @task_info.id)
-      @task_info.task_info_logs << task_info_log
-
+    if @task_info.task_status_id != params[:task_status_id]
       # タスク時間計測周り
-      case @task_info.task_status_id
+      case params[:task_status_id].to_i
+      when TaskStatus.task_status_not_started.id then
+        @task_info.real_task_time = 0
       when TaskStatus.task_status_start.id then
         @task_info.task_start_time = Time.now()
+      when TaskStatus.task_status_abort.id then
+        @task_info.real_task_time = @task_info.calc_task_time
       when TaskStatus.task_status_finish.id then
         @task_info.real_task_time = @task_info.calc_task_time
       end
+
+      @task_info.task_status_id = params[:task_status_id] # real_task_timeの更新計算自体は前のステータスでないとだめなのでステータス更新はこのタイミング
+      task_info_log = TaskInfoLog.new(:content => "進捗を#{@task_info.task_status.name_jp}に変更", :task_info_id => @task_info.id)
+      @task_info.task_info_logs << task_info_log
     end
     msg = @task_info.save ? "Task status changed" : "Task status change process failed"
     respond_to do |format|

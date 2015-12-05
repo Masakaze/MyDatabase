@@ -13,6 +13,10 @@ class TaskStatus < ActiveRecord::Base
     TaskStatus.find_by(:name_jp => "作業中")
   end
 
+  def self.task_status_abort
+    TaskStatus.find_by(:name_jp => "作業中断")
+  end
+
   def self.task_status_finish
     TaskStatus.find_by(:name_jp => "完了")
   end
