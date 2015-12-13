@@ -68,9 +68,21 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
   # POST
   # アップロードコメントをTaskDBに送信
   def upload_comment
-    require 'yaml'
+    task_info = TaskInfo.find(params[:id])
+    task_info_log = TaskInfoLog.new(:content => params[:upload_comment], :log_type => TaskInfoLog.type_text)
+    msg = ""
+
+    if task_info == nil
+      msg = "TaskInfo not found(id:#{params[:id]})"
+    elsif params[:upload_comment]
+      msg = "Params should have upload comment."
+    else
+      task_info << task_info_log
+      msg = "success" if task_info.save
+    end
+
     respond_to do |format|
-      format.html { render :text => "not implemented\n#{params.to_yaml}" }
+      format.html { render :text => msg }
     end
   end
 
