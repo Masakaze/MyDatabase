@@ -77,7 +77,7 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
     elsif params[:upload_comment] == nil
       msg = "Params should have upload comment."
     else
-      task_info << task_info_log
+      task_info.task_info_logs << task_info_log
       msg = "success" if task_info.save
     end
 
