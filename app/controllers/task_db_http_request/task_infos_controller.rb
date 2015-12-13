@@ -74,7 +74,7 @@ class TaskDbHttpRequest::TaskInfosController < ApplicationController
 
     if task_info == nil
       msg = "TaskInfo not found(id:#{params[:id]})"
-    elsif params[:upload_comment]
+    elsif params[:upload_comment] == nil
       msg = "Params should have upload comment."
     else
       task_info << task_info_log
