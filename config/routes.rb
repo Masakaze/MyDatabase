@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     get 'task_db/resave_task_infos', to: 'task_dbs#resave_task_infos'
   end
 
+  get 'twitters', to: 'twitters#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
