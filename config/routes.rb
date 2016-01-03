@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   end
 
   get 'twitters', to: 'twitters#index'
+  get 'twitters/post_tweet_by_get', to: 'twitters#post_tweet_by_get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
