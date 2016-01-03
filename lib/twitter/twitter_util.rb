@@ -7,11 +7,12 @@
 require 'rubygems'
 require 'twitter'
 
-require_relative 'TwitterAccessor'
+require_relative 'twitter_accessor'
 
 TWITTER_TO_REX = "(^@[\\dA-Za-z_\\s\\@]*)\\s"
 TWITTER_URL_REX = "http:\\/\\/[\\dA-Za-z_\\/\\.]*"
 
+module Twitter
 module TwitterUtil
 
 #
@@ -66,6 +67,7 @@ module TwitterUtil
   def post(accessor, text, post_options = {})
     accessor.get_client().update(text, post_options)
   end
+  module_function :post
 
   #
   #
@@ -110,6 +112,7 @@ module TwitterUtil
     return url_array
   end
 
+end
 end
 
 if __FILE__ == $0

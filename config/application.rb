@@ -25,5 +25,8 @@ module MyDatabase
 
     # デフォルトは :log で, 許可されていないパラメータは無視されたうえでログ出力されます.
     config.action_controller.action_on_unpermitted_parameters = :raise
+
+    # lib以下のファイルを自動require
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

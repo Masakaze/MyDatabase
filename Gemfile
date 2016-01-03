@@ -31,6 +31,9 @@ gem 'jbuilder', '~> 2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Twitter
+gem 'twitter'
+
 group :development, :test do
   # Use mysql as the database for Active Record
   gem 'mysql2',  '~> 0.3.18'
