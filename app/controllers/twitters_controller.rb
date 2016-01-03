@@ -33,6 +33,8 @@ class TwittersController < ApplicationController
     end
 
     Twitter::TwitterUtil::post(accessor, tweet_text, post_options)
+
+    render :text => "success"
   end
 
 end
