@@ -6,7 +6,7 @@ class TwittersController < ApplicationController
 
   include Twitter::TwitterUtil
 
-  before_action :login_twitter, :only => ['get_home_timeline', 'post_tweet_by_get']
+  before_action :login_twitter, :only => ['get_home_timeline', 'post_tweet_by_get', 'post_tweet']
 
   def index
     render
@@ -31,21 +31,12 @@ class TwittersController < ApplicationController
 
   # GET
   def post_tweet_by_get
-    # params[:tweet_text] = "Rails(Get)から投稿するテスト"
-    # params[:reply_id] = "683645191547310080"
-    tweet_text = params[:tweet_text]
+    post_tweet_core(params)
+  end
 
-    post_options = {}
-    if params.key?(:reply_id)
-      unless /^@[\w\d]* .*/ =~ tweet_text && tweet_text[0] == "@"
-        abort("リプライ指定するときは「@」から初めてください\n#{tweet_text}")
-      end
-      post_options[:in_reply_to_status_id] = params[:reply_id]
-    end
-
-    Twitter::TwitterUtil::post(@accessor, tweet_text, post_options)
-
-    render :text => "success"
+  # POST
+  def post_tweet
+    post_tweet_core(params)
   end
 
   # GET twitters/parse_by_mecab
@@ -68,6 +59,24 @@ class TwittersController < ApplicationController
                    "4667929753-7MpXsp7HjgxjQeHcW5H3l69sX3dSTtw3PSNEOMy",
                    "SUZXkAHGtqsR2othTAIbVM48MmzKyPsAovUk0Zc2srVTz"
                    )
+  end
+
+  def post_tweet_core(params)
+    # params[:tweet_text] = "Rails(Get)から投稿するテスト"
+    # params[:reply_id] = "683645191547310080"
+    tweet_text = params[:tweet_text]
+
+    post_options = {}
+    if params.key?(:reply_id)
+      unless /^@[\w\d]* .*/ =~ tweet_text && tweet_text[0] == "@"
+        abort("リプライ指定するときは「@」から初めてください\n#{tweet_text}")
+      end
+      post_options[:in_reply_to_status_id] = params[:reply_id]
+    end
+
+    Twitter::TwitterUtil::post(@accessor, tweet_text, post_options)
+
+    render :text => "success"
   end
 
 end
