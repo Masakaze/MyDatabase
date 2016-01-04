@@ -48,6 +48,9 @@ class TwittersController < ApplicationController
     render :text => "success"
   end
 
+  def parse_by_mecab
+  end
+
   private
   def login_twitter
     @accessor = TwitterAccessor.new()
