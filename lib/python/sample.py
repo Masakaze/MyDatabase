@@ -20,4 +20,5 @@ if __name__ == '__main__':
         print(fin.read())
     print("file read end")
 
+    os.remove(tmp_file)
     
