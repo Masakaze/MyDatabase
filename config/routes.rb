@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get 'twitters', to: 'twitters#index'
   get 'twitters/get_home_timeline', to: 'twitters#get_home_timeline'
   get 'twitters/post_tweet_by_get', to: 'twitters#post_tweet_by_get'
+  get 'twitters/python', to: 'twitters#python'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

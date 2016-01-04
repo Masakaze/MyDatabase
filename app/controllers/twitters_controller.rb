@@ -52,6 +52,13 @@ class TwittersController < ApplicationController
   def parse_by_mecab
   end
 
+  # GET twitters/python
+  def python
+    script = File.join(Rails.root.to_s, "lib", "python", "sample.py")
+    result = `python #{script}`
+    render :text => result
+  end
+
   private
   def login_twitter
     @accessor = TwitterAccessor.new()
