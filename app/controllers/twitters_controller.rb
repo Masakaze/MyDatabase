@@ -12,7 +12,7 @@ class TwittersController < ApplicationController
     render
   end
 
-  # GET twitters/get_home_timeline.xml 
+  # GET twitters/get_home_timeline.xml
   def get_home_timeline
     home_timelines = get_home_timelines(@accessor)
     result = []
