@@ -4,6 +4,9 @@
 
 class TwittersController < ApplicationController
 
+  # CSFRトークンエラー対応
+  protect_from_forgery with: :null_session
+
   include Twitter::TwitterUtil
 
   before_action :login_twitter, :only => ['get_home_timeline', 'post_tweet_by_get', 'post_tweet']
