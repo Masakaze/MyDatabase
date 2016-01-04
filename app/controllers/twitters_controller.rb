@@ -48,7 +48,7 @@ class TwittersController < ApplicationController
     render :text => "success"
   end
 
-  # GET
+  # GET twitters/parse_by_mecab
   def parse_by_mecab
   end
 
