@@ -33,6 +33,8 @@ gem 'jbuilder', '~> 2.0'
 
 # Twitter
 gem 'twitter'
+gem 'igo-ruby'
+gem 'rubyzip'
 
 group :development, :test do
   # Use mysql as the database for Active Record

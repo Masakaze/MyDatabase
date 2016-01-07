@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get 'twitters/post_tweet_by_get', to: 'twitters#post_tweet_by_get'
   post 'twitters/post_tweet', to: 'twitters#post_tweet'
   get 'twitters/python', to: 'twitters#python'
+  get 'twitters/parse_sentence', to: 'twitters#parse_sentence'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

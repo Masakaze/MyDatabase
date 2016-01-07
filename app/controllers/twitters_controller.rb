@@ -4,7 +4,7 @@
 
 class TwittersController < ApplicationController
 
-  # CSFRトークンエラー対応
+  # CSRFトークンエラー対応
   protect_from_forgery with: :null_session
 
   include Twitter::TwitterUtil
@@ -43,12 +43,35 @@ class TwittersController < ApplicationController
   end
 
   # GET twitters/parse_by_mecab
-  def parse_by_mecab
+  def parse_sentence
+#    require 'rubygems'
+#    require 'igo-ruby'
+    ipadic_path = File.join(get_lib_dir, "twitter", "ipadic")
+
+    # 解凍済みファイルは重いので初回のみ解凍
+    if File.exist?(ipadic_path) == false
+      require "zip/zip"
+      Zip::ZipFile.open("#{ipadic_path}.zip") do |zip|
+        zip.each do |entry|
+          # { true } は展開先に同名ファイルが存在する場合に上書きする指定
+          zip.extract(entry, File.join(File.dirname(ipadic_path), entry.to_s)) { true }
+          end
+      end
+    end
+
+    tagger = Igo::Tagger.new(ipadic_path)
+    t = tagger.parse("私はサッカーが好きです")
+    output = ""
+    t.each { |m|
+      output += "#{m.surface} #{m.feature} #{m.start}\n"
+    }
+
+    render :text => output
   end
 
   # GET twitters/python
   def python
-    script = File.join(Rails.root.to_s, "lib", "python", "sample.py")
+    script = File.join(get_lib_dir, "python", "sample.py")
     result = `python #{script}`
     render :text => result
   end
@@ -80,6 +103,10 @@ class TwittersController < ApplicationController
     Twitter::TwitterUtil::post(@accessor, tweet_text, post_options)
 
     render :text => "success"
+  end
+
+  def get_lib_dir
+    return File.join(Rails.root.to_s, "lib")
   end
 
 end
